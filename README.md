@@ -1,6 +1,6 @@
 # Cardápio Temático
 
-Cardápio animado com três "skins": **Bruxo**, **Medieval** e **Futurista**. Os itens ficam em prateleiras separadas por categoria; ao tocar num item ele vem para a frente com a ficha, e ao adicionar ele voa para o receptáculo do tema (caldeirão, baú ou teleportador). Dali dá para revisar, esvaziar e fechar o pedido.
+Cardápio animado com seis "skins": **Bruxo**, **Medieval**, **Futurista**, **Pirata**, **Faroeste** e **Fundo do mar**. Os itens ficam em prateleiras separadas por categoria; ao tocar num item ele vem para a frente com a ficha, e ao adicionar ele voa para o receptáculo do tema (caldeirão, baú, teleportador, barril, carrinho de mina ou concha). Dali dá para revisar, esvaziar e fechar o pedido.
 
 ## Rodar
 
@@ -10,7 +10,7 @@ Cardápio animado com três "skins": **Bruxo**, **Medieval** e **Futurista**. Os
 - `python -m http.server` na pasta do projeto (abre em http://localhost:8000), ou
 - IIS, Apache, Nginx, qualquer hospedagem estática.
 
-Para trocar de tema, use o botão de paleta no canto inferior esquerdo (ferramenta de teste) ou a URL: `?tema=bruxo`, `?tema=medieval`, `?tema=futurista`.
+Para trocar de tema, use o botão de paleta no canto inferior esquerdo (ferramenta de teste) ou a URL: `?tema=bruxo`, `medieval`, `futurista`, `pirata`, `faroeste` ou `mar`.
 
 ## Produtos
 
@@ -46,7 +46,8 @@ Formato: uma lista, ou um objeto `{ "produtos": [...] }`:
 | `produtos-exemplo.json` | Cardápio de exemplo para importar |
 | `src/temas.js` | Configuração de cada tema: textos, receptáculo, decoração, partículas |
 | `src/icones/base.js` | Desenhos SVG das comidas/sobremesas, reaproveitados pelos temas |
-| `src/icones/{bruxo,medieval,futurista}.js` | Ícones próprios de cada tema + nomes temáticos ("Asa de Dragão") |
+| `src/icones/recipientes.js` | Copos, garrafas, taças, xícaras, cantis etc. reaproveitados pelos temas |
+| `src/icones/<tema>.js` | Como cada tema desenha bebidas e serve as comidas |
 | `src/ui/*` | Prateleiras, ficha, carrinho/pedido, importador |
 | `src/efeitos.js` / `src/sons.js` | Partículas, voo dos itens e sons sintetizados (Web Audio) |
 | `src/estilos/*` | CSS base + um arquivo por tema |
@@ -56,6 +57,7 @@ Todos os ícones são SVG desenhados em código (sem imagens externas); as anima
 ### Criar um tema novo
 
 1. Crie `src/icones/meutema.js` exportando `iconeMeutema(tipo, info)` e adicione os apelidos do tema em `src/apelidos.js`.
-2. Adicione a entrada em `TEMAS` (`src/temas.js`) com textos, SVG do receptáculo, `boca` (ponto onde os itens caem, em fração do SVG), decoração e partículas.
+2. Adicione a entrada em `TEMAS` (`src/temas.js`) com textos, SVG do receptáculo, `boca` (ponto onde os itens caem, em fração do SVG), selo do pedido confirmado, cores da explosão, decoração e partículas.
 3. Crie `src/estilos/meutema.css` com as variáveis sob `[data-tema='meutema']` e adicione o `<link>` no `index.html`.
 4. Se quiser sons próprios, adicione um perfil em `src/sons.js`.
+5. Adicione a cor da amostra do painel de teste (`.amostra-meutema` em `src/estilos/base.css`).

@@ -1,0 +1,316 @@
+/* Tema fundo do mar: água turquesa, raios de luz, algas, peixes e bolhas; recifes de coral e etiquetas-bolha. */
+
+[data-tema='mar'] {
+  --fundo: #0a4f68;
+  --texto: #e8fbff;
+  --texto-suave: #a6dbe6;
+  --titulo-cor: #fff4f0;
+  --titulo-sombra: 0 3px 0 #0b6f86, 0 0 18px rgba(122, 224, 208, 0.5);
+  --destaque: #ff7a8a;
+  --destaque-texto: #3a0a14;
+  --destaque-borda: #ffc2cb;
+  --painel: #e9fbfd;
+  --painel-texto: #0b3a4a;
+  --painel-suave: #3d7285;
+  --painel-borda: #8fd3df;
+  --painel-preco: #d63d52;
+  --painel-sombra: 0 24px 60px rgba(0, 20, 40, 0.5);
+  --palco: radial-gradient(circle, rgba(122, 224, 208, 0.45), rgba(122, 224, 208, 0) 70%);
+  --campo-bg: rgba(143, 211, 223, 0.2);
+  --fonte-titulo: 'Baloo 2', 'Segoe UI', sans-serif;
+  --fonte-texto: 'Nunito', 'Segoe UI', sans-serif;
+  --fonte-rotulo: 'Baloo 2', 'Segoe UI', sans-serif;
+  --fonte-placa: 'Nunito', 'Segoe UI', sans-serif;
+  --contorno: #0b2a3a;
+  --raio-btn: 999px;
+  --raio-pilula: 999px;
+  --raio-aba: 999px;
+  --controle-bg: rgba(255, 255, 255, 0.14);
+  --controle-borda: rgba(191, 244, 255, 0.45);
+  --aba-bg: rgba(255, 255, 255, 0.12);
+  --aba-borda: rgba(191, 244, 255, 0.4);
+  --aba-texto: #dff8ff;
+  --aba-ativa-bg: #ff7a8a;
+  --aba-ativa-texto: #3a0a14;
+  --aba-ativa-borda: #ffc2cb;
+  --placa-bg: rgba(233, 251, 253, 0.92);
+  --placa-texto: #0b3a4a;
+  --placa-preco: #d63d52;
+  --contador-bg: #ff7a8a;
+  --contador-texto: #3a0a14;
+  --contador-sombra: 0 0 0 3px rgba(255, 255, 255, 0.6), 0 3px 8px rgba(0, 0, 0, 0.35);
+  --aviso-bg: #e9fbfd;
+  --aviso-texto: #0b3a4a;
+  --veu: rgba(2, 20, 32, 0.6);
+  --foco: #ffd166;
+  --perigo: #d63d52;
+  --clarao: radial-gradient(circle at 50% 85%, rgba(191, 244, 255, 0.6), rgba(191, 244, 255, 0) 70%);
+
+  background: linear-gradient(#11869e 0%, #0a5d78 40%, #063a52 100%);
+}
+
+[data-tema='mar'] .titulo {
+  font-weight: 800;
+}
+
+[data-tema='mar'] .aba,
+[data-tema='mar'] .btn,
+[data-tema='mar'] .receptaculo-rotulo {
+  font-weight: 700;
+}
+
+[data-tema='mar'] .receptaculo-rotulo {
+  border-radius: 999px;
+  background: rgba(6, 58, 82, 0.75);
+}
+
+/* Raios de sol, algas, peixes e areia */
+[data-tema='mar'] .raios i {
+  position: absolute;
+  top: -10%;
+  left: var(--x);
+  width: 110px;
+  height: 115%;
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 80%);
+  transform: rotate(var(--rot));
+  transform-origin: top;
+  filter: blur(8px);
+  animation: raio 7s ease-in-out infinite;
+  animation-delay: var(--atraso);
+}
+
+@keyframes raio {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+[data-tema='mar'] .alga {
+  position: absolute;
+  bottom: 0;
+  height: 55vh;
+  width: 80px;
+  transform-origin: bottom;
+  animation: alga 5s ease-in-out infinite alternate;
+}
+
+[data-tema='mar'] .alga.esq {
+  left: 1%;
+}
+
+[data-tema='mar'] .alga.dir {
+  right: 1%;
+  animation-delay: -2.5s;
+}
+
+@keyframes alga {
+  from { transform: skewX(-5deg); }
+  to { transform: skewX(5deg); }
+}
+
+[data-tema='mar'] .peixe {
+  position: absolute;
+  left: 0;
+  width: 40px;
+  color: rgba(3, 30, 45, 0.45);
+  animation: nadar 26s linear infinite;
+}
+
+[data-tema='mar'] .peixe.p1 {
+  top: 30%;
+  scale: -1 1;
+  left: auto;
+  right: 0;
+}
+
+[data-tema='mar'] .peixe.p2 {
+  top: 55%;
+  width: 28px;
+  animation-duration: 18s;
+  animation-delay: -6s;
+  scale: -1 1;
+  left: auto;
+  right: 0;
+}
+
+[data-tema='mar'] .peixe.p3 {
+  top: 16%;
+  width: 34px;
+  animation-duration: 34s;
+  animation-delay: -14s;
+}
+
+@keyframes nadar {
+  0% { transform: translateX(-80px) translateY(0); }
+  50% { transform: translateX(calc(50vw)) translateY(-14px); }
+  100% { transform: translateX(calc(100vw + 80px)) translateY(0); }
+}
+
+[data-tema='mar'] .areia {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: -2vh;
+  height: 11vh;
+  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+  background: radial-gradient(ellipse at 50% 0%, #f1d7a6, #c9a66b);
+  opacity: 0.9;
+}
+
+@media (max-width: 720px) {
+  [data-tema='mar'] .alga {
+    height: 32vh;
+    width: 50px;
+  }
+}
+
+/* Prateleiras: saliências de recife com corais */
+[data-tema='mar'] .prateleira {
+  --tabua: 16px;
+}
+
+[data-tema='mar'] .prateleira-tabua {
+  border-radius: 999px;
+  background: linear-gradient(#f3c9a0, #d9956a 70%, #b8744c);
+  box-shadow: 0 12px 18px -6px rgba(0, 20, 40, 0.55), inset 0 3px 0 rgba(255, 255, 255, 0.35);
+}
+
+[data-tema='mar'] .prateleira-tabua::before,
+[data-tema='mar'] .prateleira-tabua::after {
+  content: '';
+  position: absolute;
+  bottom: 60%;
+  width: 26px;
+  height: 30px;
+  background:
+    radial-gradient(circle at 30% 20%, #ff7a8a 0 5px, transparent 6px),
+    radial-gradient(circle at 70% 30%, #ff7a8a 0 4px, transparent 5px),
+    linear-gradient(#ff7a8a, #ff7a8a) 45% 100% / 5px 70% no-repeat,
+    linear-gradient(#ff7a8a, #ff7a8a) 25% 100% / 4px 45% no-repeat,
+    linear-gradient(#ff7a8a, #ff7a8a) 70% 100% / 4px 55% no-repeat;
+}
+
+[data-tema='mar'] .prateleira-tabua::before {
+  left: 3%;
+}
+
+[data-tema='mar'] .prateleira-tabua::after {
+  right: 3%;
+  filter: hue-rotate(150deg);
+}
+
+[data-tema='mar'] .item-icone .ic {
+  animation: flutua-mar 4.4s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.55s);
+  filter: drop-shadow(0 6px 6px rgba(0, 20, 40, 0.4));
+}
+
+@keyframes flutua-mar {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-6px) rotate(1deg); }
+}
+
+[data-tema='mar'] .item:hover .item-icone {
+  filter: drop-shadow(0 0 14px rgba(191, 244, 255, 0.8));
+}
+
+/* Etiqueta-bolha */
+[data-tema='mar'] .item-placa {
+  border-radius: 999px;
+  padding: 5px 14px 6px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 10px rgba(0, 20, 40, 0.35);
+}
+
+[data-tema='mar'] .item-nome {
+  font-weight: 700;
+}
+
+/* Receptáculo: concha gigante com pérola */
+[data-tema='mar'] .receptaculo .tampa {
+  transform-origin: 100px 112px;
+  transform: translateY(-6px);
+  transition: transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+[data-tema='mar'] .receptaculo:hover .tampa,
+[data-tema='mar'] .receptaculo.aberto .tampa {
+  transform: translateY(-18px) scaleY(0.94);
+}
+
+[data-tema='mar'] .receptaculo.recebendo .receptaculo-svg {
+  animation: none;
+}
+
+[data-tema='mar'] .receptaculo.recebendo .tampa,
+[data-tema='mar'] .receptaculo.enviando .tampa {
+  animation: concha-abre 0.9s ease-out;
+}
+
+[data-tema='mar'] .receptaculo .perola {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: perola 2.6s ease-in-out infinite;
+}
+
+[data-tema='mar'] .receptaculo .borbulhas circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.8);
+  stroke-width: 1.6;
+  opacity: 0;
+  animation: bolha-concha 2.8s ease-out infinite;
+  animation-delay: var(--atraso);
+}
+
+[data-tema='mar'] .receptaculo.recebendo .borbulhas circle {
+  animation-duration: 0.9s;
+}
+
+@keyframes concha-abre {
+  0% { transform: translateY(-6px); }
+  30%, 60% { transform: translateY(-30px) scaleY(0.9); }
+  100% { transform: translateY(-6px); }
+}
+
+@keyframes perola {
+  0%, 100% { transform: scale(1); fill: #f5f0ff; }
+  50% { transform: scale(1.06); fill: #ffffff; }
+}
+
+@keyframes bolha-concha {
+  0% { opacity: 0; transform: translateY(0); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-70px); }
+}
+
+/* Ficha: bolha que se forma */
+[data-tema='mar'] .ficha,
+[data-tema='mar'] .painel {
+  border-radius: 28px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  background:
+    radial-gradient(circle at 15% 12%, rgba(255, 255, 255, 0.9) 0 8%, transparent 30%),
+    linear-gradient(160deg, #f4fdff, #d5f2f7);
+}
+
+[data-tema='mar'] .gaveta {
+  border-radius: 28px 0 0 28px;
+  background: linear-gradient(160deg, #f4fdff, #d5f2f7);
+}
+
+[data-tema='mar'] .camada-ficha.entrando .ficha {
+  animation: bolha-forma 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+
+@keyframes bolha-forma {
+  from { transform: scale(0.2); border-radius: 50%; opacity: 0; }
+  to { transform: none; border-radius: 28px; opacity: 1; }
+}
+
+/* Indicador de mais itens: bolha */
+[data-tema='mar'] .indicador-mais {
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.35), 0 6px 16px rgba(0, 20, 40, 0.35);
+}

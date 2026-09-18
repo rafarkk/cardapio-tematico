@@ -294,3 +294,15 @@
 [data-tema='futurista'] .painel-pedido.sucesso .selo svg {
   filter: drop-shadow(0 0 10px #37f0ff);
 }
+
+/* Indicador de mais itens: aviso holográfico */
+[data-tema='futurista'] .indicador-mais {
+  border-color: #37f0ff;
+  border-radius: 0;
+  background: rgba(7, 13, 43, 0.85);
+  color: #37f0ff;
+  text-shadow: 0 0 8px rgba(55, 240, 255, 0.8);
+  box-shadow: 0 0 16px rgba(55, 240, 255, 0.45);
+  letter-spacing: 0.04em;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}

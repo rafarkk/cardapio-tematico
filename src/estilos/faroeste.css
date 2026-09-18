@@ -1,0 +1,320 @@
+/* Tema faroeste: deserto ao pôr do sol, mesas, cactos e poeira; prateleiras de saloon e placas de "procurado". */
+
+[data-tema='faroeste'] {
+  --fundo: #f0a25e;
+  --texto: #3b2415;
+  --texto-suave: #6e4526;
+  --titulo-cor: #7a2a1a;
+  --titulo-sombra: 2px 2px 0 #f6d7a4;
+  --destaque: #b23a2a;
+  --destaque-texto: #fff3e0;
+  --destaque-borda: #7a2a1a;
+  --painel: #f3e3c3;
+  --painel-texto: #3b2415;
+  --painel-suave: #7a5536;
+  --painel-borda: #a8743f;
+  --painel-preco: #b23a2a;
+  --painel-sombra: 0 24px 60px rgba(60, 20, 5, 0.45);
+  --palco: radial-gradient(circle, rgba(255, 210, 120, 0.5), rgba(255, 210, 120, 0) 70%);
+  --campo-bg: rgba(255, 255, 255, 0.55);
+  --fonte-titulo: 'Rye', Georgia, serif;
+  --fonte-texto: 'Zilla Slab', Georgia, serif;
+  --fonte-rotulo: 'Zilla Slab', Georgia, serif;
+  --fonte-placa: 'Zilla Slab', Georgia, serif;
+  --contorno: #2a1810;
+  --raio-btn: 3px;
+  --raio-pilula: 4px;
+  --raio-aba: 0;
+  --controle-bg: rgba(255, 236, 205, 0.85);
+  --controle-borda: #7a4a28;
+  --aba-bg: #8a5a2b;
+  --aba-borda: #4a2c14;
+  --aba-texto: #fbe9cc;
+  --aba-ativa-bg: #b23a2a;
+  --aba-ativa-texto: #fff3e0;
+  --aba-ativa-borda: #4a2c14;
+  --placa-bg: #f3e3c3;
+  --placa-texto: #3b2415;
+  --placa-preco: #b23a2a;
+  --contador-bg: #b23a2a;
+  --contador-texto: #fff3e0;
+  --contador-sombra: 0 0 0 2px #f2c14e, 0 3px 8px rgba(0, 0, 0, 0.4);
+  --aviso-bg: #f3e3c3;
+  --aviso-texto: #3b2415;
+  --veu: rgba(60, 25, 10, 0.55);
+  --foco: #1f6f8b;
+  --perigo: #b23a2a;
+  --clarao: radial-gradient(circle at 50% 85%, rgba(255, 220, 140, 0.6), rgba(255, 220, 140, 0) 70%);
+
+  background: linear-gradient(#f7d49a 0%, #f2ab66 45%, #e0703c 80%, #b8502e 100%);
+}
+
+[data-tema='faroeste'] .titulo {
+  font-size: clamp(1.4rem, 3.2vw, 2.4rem);
+}
+
+[data-tema='faroeste'] .lema {
+  font-style: italic;
+}
+
+/* Sol, mesas, cactos e a bola de mato seco */
+[data-tema='faroeste'] .sol {
+  position: absolute;
+  left: 50%;
+  bottom: 16%;
+  width: 300px;
+  height: 300px;
+  margin-left: -150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff3c8 0 40%, #ffd27a 58%, rgba(255, 190, 90, 0) 72%);
+}
+
+[data-tema='faroeste'] .mesas {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 28vh;
+}
+
+[data-tema='faroeste'] .cacto {
+  position: absolute;
+  bottom: 3vh;
+  width: 70px;
+  transform-origin: bottom;
+  animation: cacto 6s ease-in-out infinite;
+}
+
+[data-tema='faroeste'] .cacto.esq {
+  left: 3%;
+}
+
+[data-tema='faroeste'] .cacto.dir {
+  right: 4%;
+  width: 52px;
+  animation-delay: -3s;
+}
+
+@keyframes cacto {
+  0%, 100% { transform: skewX(0deg); }
+  50% { transform: skewX(1.5deg); }
+}
+
+[data-tema='faroeste'] .rolador {
+  position: absolute;
+  bottom: 2vh;
+  left: -80px;
+  width: 56px;
+  height: 56px;
+  animation: rolar 17s linear infinite;
+}
+
+[data-tema='faroeste'] .rolador svg {
+  width: 100%;
+  height: 100%;
+  animation: giro 1.3s linear infinite, quicar 0.65s ease-in-out infinite alternate;
+}
+
+@keyframes rolar {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 160px)); }
+}
+
+@keyframes quicar {
+  from { translate: 0 0; }
+  to { translate: 0 -12px; }
+}
+
+@media (max-width: 720px) {
+  [data-tema='faroeste'] .cacto {
+    width: 44px;
+  }
+}
+
+[data-tema='faroeste'] .receptaculo-rotulo {
+  border-radius: 4px;
+  background: rgba(243, 227, 195, 0.92);
+  box-shadow: 0 2px 6px rgba(60, 20, 5, 0.3);
+}
+
+/* Abas em forma de placa de direção */
+[data-tema='faroeste'] .aba {
+  padding: 8px 26px 8px 16px;
+  border-width: 0;
+  clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.25);
+  font-weight: 600;
+}
+
+/* Prateleiras de saloon com mãos-francesas de ferro */
+[data-tema='faroeste'] .prateleira {
+  --tabua: 18px;
+}
+
+[data-tema='faroeste'] .prateleira-tabua {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 90px, rgba(0, 0, 0, 0.12) 90px 92px),
+    linear-gradient(#9c6334, #6e3f1e 60%, #4a2912);
+  border-top: 2px solid #c48a4d;
+  box-shadow: 0 12px 14px -6px rgba(60, 20, 5, 0.6);
+}
+
+[data-tema='faroeste'] .prateleira-tabua::before,
+[data-tema='faroeste'] .prateleira-tabua::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  width: 20px;
+  height: 20px;
+  border-left: 4px solid #2a2a2a;
+  border-top: 4px solid #2a2a2a;
+  border-radius: 2px 0 0 0;
+}
+
+[data-tema='faroeste'] .prateleira-tabua::before {
+  left: 8%;
+}
+
+[data-tema='faroeste'] .prateleira-tabua::after {
+  right: 8%;
+  transform: scaleX(-1);
+}
+
+[data-tema='faroeste'] .item-icone .ic {
+  filter: drop-shadow(0 5px 3px rgba(60, 20, 5, 0.45));
+}
+
+[data-tema='faroeste'] .item:hover .item-icone {
+  filter: drop-shadow(0 0 14px rgba(255, 240, 180, 0.9));
+}
+
+/* Placa de "procurado" */
+[data-tema='faroeste'] .item-placa {
+  position: relative;
+  padding: 7px 12px;
+  border: 2px solid #3b2415;
+  box-shadow: inset 0 0 0 2px #f3e3c3, inset 0 0 0 3px #3b2415, 0 4px 8px rgba(60, 20, 5, 0.35);
+  background: radial-gradient(ellipse at 50% 40%, #f7ebd0, #e6cfa2);
+  rotate: -1.5deg;
+}
+
+[data-tema='faroeste'] .item:nth-child(even) .item-placa {
+  rotate: 1.5deg;
+}
+
+[data-tema='faroeste'] .item-placa::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  border-radius: 50%;
+  background: #5b5f66;
+  box-shadow: 0 1px 0 #2a2a2a;
+}
+
+[data-tema='faroeste'] .item-nome {
+  font-weight: 600;
+}
+
+/* Receptáculo: carrinho de mina nos trilhos */
+[data-tema='faroeste'] .receptaculo .brilho-chao {
+  fill: #6e3f1e;
+  opacity: 0.25;
+}
+
+[data-tema='faroeste'] .receptaculo .vagonete {
+  transition: transform 0.3s ease;
+}
+
+[data-tema='faroeste'] .receptaculo:hover .vagonete {
+  transform: translateX(-6px);
+}
+
+[data-tema='faroeste'] .receptaculo.recebendo .receptaculo-svg {
+  animation: none;
+}
+
+[data-tema='faroeste'] .receptaculo.recebendo .vagonete {
+  animation: vagonete 0.8s ease-out;
+}
+
+[data-tema='faroeste'] .receptaculo.recebendo .roda,
+[data-tema='faroeste'] .receptaculo.enviando .roda {
+  animation: giro 0.8s ease-out;
+}
+
+[data-tema='faroeste'] .receptaculo.enviando .vagonete {
+  animation: vagonete-parte 1.3s ease-in-out;
+}
+
+[data-tema='faroeste'] .receptaculo .pepitas {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+[data-tema='faroeste'] .receptaculo.recebendo .pepitas {
+  animation: receber 0.7s ease-out;
+}
+
+@keyframes vagonete {
+  0% { transform: none; }
+  20% { transform: translateY(5px); }
+  45% { transform: translateY(-4px) translateX(4px); }
+  70% { transform: translateY(2px); }
+  100% { transform: none; }
+}
+
+@keyframes vagonete-parte {
+  0% { transform: none; }
+  40% { transform: translateX(40px); }
+  41% { transform: translateX(40px); opacity: 1; }
+  60% { transform: translateX(-40px); opacity: 0; }
+  61% { transform: translateX(-40px); opacity: 0; }
+  100% { transform: none; opacity: 1; }
+}
+
+/* Ficha: cartaz que desliza pelo balcão */
+[data-tema='faroeste'] .ficha,
+[data-tema='faroeste'] .painel {
+  border: 3px solid #3b2415;
+  box-shadow: inset 0 0 0 4px #f3e3c3, inset 0 0 0 6px #3b2415, var(--painel-sombra);
+  background: radial-gradient(ellipse at 50% 40%, #f8eed6, #e8d2a8);
+}
+
+[data-tema='faroeste'] .gaveta {
+  border-left: 3px solid #3b2415;
+  background: radial-gradient(ellipse at 50% 40%, #f8eed6, #e8d2a8);
+}
+
+[data-tema='faroeste'] .camada-ficha.entrando .ficha {
+  animation: desliza-balcao 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+}
+
+@keyframes desliza-balcao {
+  from { transform: translateX(-110vw) rotate(-3deg); }
+  to { transform: none; }
+}
+
+[data-tema='faroeste'] .painel-pedido.sucesso .selo {
+  animation: estrela-xerife 0.9s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+@keyframes estrela-xerife {
+  from { transform: scale(0) rotate(-180deg); }
+  to { transform: none; }
+}
+
+/* Indicador de mais itens: placa de madeira apontando para baixo */
+[data-tema='faroeste'] .indicador-mais {
+  border: 0;
+  border-radius: 0;
+  padding: 8px 20px 16px;
+  background: linear-gradient(#9c6334, #6e3f1e);
+  color: #fbe9cc;
+  font-weight: 600;
+  box-shadow: none;
+  clip-path: polygon(0 0, 100% 0, 100% 72%, 50% 100%, 0 72%);
+}

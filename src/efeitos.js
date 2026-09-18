@@ -23,17 +23,19 @@ export function criarParticulas(canvas) {
 
   function nova(inicio) {
     const c = config;
-    const deBaixo = c.origem === 'baixo';
+    const o = c.origem;
+    // "baixo": nasce embaixo e sobe; "esquerda": atravessa a tela da esquerda para a direita;
+    // sem origem: espalhada pela tela e, ao sair, renasce embaixo.
     return {
-      x: deBaixo ? aleatorio(0, largura) : aleatorio(0, largura),
-      y: deBaixo ? (inicio ? aleatorio(0, altura) : altura + 10) : aleatorio(0, altura),
+      x: o === 'esquerda' && !inicio ? -10 : aleatorio(0, largura),
+      y: o === 'esquerda' ? aleatorio(0, altura) : inicio ? aleatorio(0, altura) : altura + 10,
       vx: aleatorio(...c.vx),
       vy: aleatorio(...c.vy),
       tam: aleatorio(...c.tam),
       cor: escolher(c.cores),
       fase: Math.random() * Math.PI * 2,
       vida: 1,
-      decai: deBaixo ? aleatorio(0.0015, 0.004) : 0,
+      decai: o === 'baixo' && c.forma === 'brasa' ? aleatorio(0.0015, 0.004) : 0,
     };
   }
 
@@ -67,6 +69,12 @@ export function criarParticulas(canvas) {
     ctx.fillStyle = p.cor;
     if (config.forma === 'traco') {
       ctx.fillRect(p.x, p.y, 1.2, p.tam * 6);
+    } else if (config.forma === 'bolha') {
+      ctx.strokeStyle = p.cor;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.tam, 0, Math.PI * 2);
+      ctx.stroke();
     } else {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.tam, 0, Math.PI * 2);
@@ -82,12 +90,11 @@ export function criarParticulas(canvas) {
       ctx.shadowBlur = 8;
       for (let i = 0; i < ambiente.length; i++) {
         const p = ambiente[i];
-        p.x += p.vx + (config.forma === 'brasa' ? Math.sin(t * 0.02 + p.fase) * 0.3 : 0);
+        p.x += p.vx + (config.forma === 'brasa' || config.forma === 'bolha' ? Math.sin(t * 0.02 + p.fase) * 0.3 : 0);
         p.y += p.vy;
         p.vida -= p.decai;
-        if (p.y < -20 || p.vida <= 0 || p.x < -20 || p.x > largura + 20) {
+        if (p.y < -20 || p.y > altura + 30 || p.vida <= 0 || p.x < -20 || p.x > largura + 20) {
           ambiente[i] = nova(false);
-          if (config.origem !== 'baixo') ambiente[i].y = altura + 10;
           continue;
         }
         const brilho = config.cintila ? 0.35 + 0.65 * Math.abs(Math.sin(t * 0.03 + p.fase)) : 1;

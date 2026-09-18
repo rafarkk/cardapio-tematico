@@ -41,6 +41,10 @@ function montarEstrutura() {
       <section class="estante" id="estante" role="tabpanel">
         <div class="estante-conteudo"></div>
       </section>
+      <button class="indicador-mais" data-acao="rolar-mais" tabindex="-1" aria-hidden="true">
+        <span class="indicador-texto"></span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </main>
 
     <div class="doca">

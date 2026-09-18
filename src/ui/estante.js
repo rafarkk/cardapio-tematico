@@ -4,7 +4,7 @@ import { estado, categorias } from '../loja.js';
 import { svgIcone } from '../temas.js';
 import { tocar } from '../sons.js';
 import { movimentoReduzido } from '../efeitos.js';
-import { $, brl, escapar, camadaAberta } from './comum.js';
+import { $, $$, brl, escapar, plural, camadaAberta } from './comum.js';
 
 let indice = 0;
 let colunasAtuais = 0;
@@ -82,6 +82,28 @@ export function renderizarEstante(direcao = 0, { animarItens = true } = {}) {
     );
   }
   estante.scrollTop = 0;
+  requestAnimationFrame(atualizarIndicador);
+}
+
+/** Mostra (ou esconde) o aviso de que há itens abaixo, com a contagem, e o esmaecimento das bordas. */
+export function atualizarIndicador() {
+  const estante = $('.estante');
+  const indicador = $('.indicador-mais');
+  const resto = estante.scrollHeight - estante.clientHeight - estante.scrollTop;
+  const temMais = resto > 8;
+  estante.classList.toggle('tem-mais', temMais);
+  estante.classList.toggle('rolou', estante.scrollTop > 8);
+  if (temMais) {
+    const limite = estante.getBoundingClientRect().bottom - 30;
+    const abaixo = $$('.item-icone', estante).filter((el) => {
+      const r = el.getBoundingClientRect();
+      return r.top + r.height / 2 > limite;
+    }).length;
+    $('.indicador-texto', indicador).textContent = abaixo ? `Mais ${plural(abaixo, 'item', 'itens')} abaixo` : 'Mais abaixo';
+  }
+  indicador.classList.toggle('visivel', temMais);
+  indicador.setAttribute('aria-hidden', String(!temMais));
+  indicador.tabIndex = temMais ? 0 : -1;
 }
 
 export async function irPara(pedido) {
@@ -128,6 +150,20 @@ export function iniciarEstante({ aoEscolher }) {
     if (item) aoEscolher(item.dataset.id, item);
   });
 
+  let agendado = false;
+  estante.addEventListener('scroll', () => {
+    if (agendado) return;
+    agendado = true;
+    requestAnimationFrame(() => {
+      agendado = false;
+      atualizarIndicador();
+    });
+  }, { passive: true });
+
+  $('.indicador-mais').addEventListener('click', () => {
+    estante.scrollBy({ top: estante.clientHeight * 0.75, behavior: movimentoReduzido() ? 'auto' : 'smooth' });
+  });
+
   // Deslizar o dedo troca de prateleira.
   let inicio = null;
   estante.addEventListener('pointerdown', (e) => { inicio = { x: e.clientX, y: e.clientY }; });
@@ -146,6 +182,7 @@ export function iniciarEstante({ aoEscolher }) {
 
   new ResizeObserver(() => {
     if (categorias().length && colunas() !== colunasAtuais) renderizarEstante(0, { animarItens: false });
+    else atualizarIndicador();
   }).observe(estante);
 }
 

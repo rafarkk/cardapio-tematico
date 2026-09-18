@@ -89,6 +89,41 @@ const PERFIS = {
       arpejo([1760, 2093, 2637], { tipo: 'square', dur: 0.08, vol: 0.03, passo: 0.08, atraso: 0.8 });
     },
   },
+  pirata: {
+    nav: () => ruido({ dur: 0.07, vol: 0.1, freq: 400, q: 6 }),
+    pegar: () => { ruido({ dur: 0.06, vol: 0.16, freq: 650, q: 3 }); tom({ f: 150, dur: 0.07, tipo: 'triangle', vol: 0.06 }); },
+    voltar: () => ruido({ dur: 0.09, vol: 0.12, freq: 450, q: 3 }),
+    adicionar: () => {
+      ruido({ dur: 0.45, vol: 0.18, freq: 900, q: 0.8 });
+      tom({ f: 2600, dur: 0.12, tipo: 'triangle', vol: 0.05, atraso: 0.18 });
+      tom({ f: 3300, dur: 0.18, tipo: 'triangle', vol: 0.04, atraso: 0.26 });
+    },
+    esvaziar: () => { ruido({ dur: 0.9, vol: 0.2, freq: 600, q: 0.6 }); tom({ f: 180, f2: 70, dur: 0.5, vol: 0.1 }); },
+    confirmar: () => [0, 0.45].forEach((a) => { tom({ f: 880, dur: 0.9, tipo: 'sine', vol: 0.09, atraso: a }); tom({ f: 1760, dur: 0.6, tipo: 'sine', vol: 0.03, atraso: a }); }),
+  },
+  faroeste: {
+    nav: () => { tom({ f: 2800, dur: 0.05, tipo: 'triangle', vol: 0.04 }); tom({ f: 3400, dur: 0.05, tipo: 'triangle', vol: 0.03, atraso: 0.05 }); },
+    pegar: () => ruido({ dur: 0.05, vol: 0.16, freq: 1100, q: 4 }),
+    voltar: () => ruido({ dur: 0.07, vol: 0.12, freq: 700, q: 4 }),
+    adicionar: () => {
+      tom({ f: 140, dur: 0.12, tipo: 'square', vol: 0.06 });
+      ruido({ dur: 0.18, vol: 0.14, freq: 2500, q: 2, atraso: 0.02 });
+      tom({ f: 2400, dur: 0.14, tipo: 'triangle', vol: 0.05, atraso: 0.14 });
+    },
+    esvaziar: () => [0, 0.07, 0.13, 0.21, 0.3].forEach((a, i) => tom({ f: 1800 + i * 250, dur: 0.1, tipo: 'triangle', vol: 0.05, atraso: a })),
+    confirmar: () => arpejo([392, 494, 587, 784, 587, 784], { tipo: 'square', dur: 0.2, vol: 0.04, passo: 0.12 }),
+  },
+  mar: {
+    nav: () => tom({ f: 600, f2: 950, dur: 0.07, vol: 0.06 }),
+    pegar: () => tom({ f: 420, f2: 900, dur: 0.12, vol: 0.08 }),
+    voltar: () => tom({ f: 900, f2: 420, dur: 0.12, vol: 0.07 }),
+    adicionar: () => {
+      [0, 0.06, 0.13, 0.19, 0.27].forEach((a, i) => tom({ f: 500 + i * 140, f2: 900 + i * 180, dur: 0.07, vol: 0.07, atraso: a }));
+      arpejo([1568, 2093], { tipo: 'sine', dur: 0.4, vol: 0.04, atraso: 0.3 });
+    },
+    esvaziar: () => { ruido({ dur: 0.8, vol: 0.1, freq: 300, q: 0.7 }); tom({ f: 700, f2: 200, dur: 0.6, vol: 0.06 }); },
+    confirmar: () => arpejo([784, 988, 1175, 1568, 1976], { tipo: 'sine', dur: 0.5, vol: 0.06, passo: 0.09 }),
+  },
 };
 
 export function tocar(evento) {

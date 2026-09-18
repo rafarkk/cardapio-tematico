@@ -323,3 +323,12 @@
 [data-tema='bruxo'] .painel-pedido.sucesso .selo svg {
   animation: giro 14s linear infinite;
 }
+
+/* Indicador de mais itens: selo dourado brilhante */
+[data-tema='bruxo'] .indicador-mais {
+  border-color: #caa04a;
+  background: rgba(18, 14, 34, 0.88);
+  color: #f4d68a;
+  box-shadow: 0 0 18px rgba(244, 195, 90, 0.45);
+  font-size: 1rem;
+}

@@ -231,6 +231,72 @@ button {
   flex-direction: column;
 }
 
+/* Esmaece as bordas quando há conteúdo escondido acima ou abaixo. */
+.estante {
+  --fade-topo: 0px;
+  --fade-base: 0px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fade-topo), #000 calc(100% - var(--fade-base)), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fade-topo), #000 calc(100% - var(--fade-base)), transparent 100%);
+}
+
+.estante.rolou {
+  --fade-topo: 28px;
+}
+
+.estante.tem-mais {
+  --fade-base: 64px;
+}
+
+/* Aviso de "mais itens abaixo" (cada tema dá o seu visual). */
+.indicador-mais {
+  appearance: none;
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid var(--controle-borda);
+  border-radius: var(--raio-pilula);
+  background: var(--controle-bg);
+  color: var(--texto);
+  font-family: var(--fonte-rotulo);
+  font-size: 0.92rem;
+  cursor: pointer;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.indicador-mais.visivel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.indicador-mais svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  animation: seta-desce 1.2s ease-in-out infinite;
+}
+
+@keyframes seta-desce {
+  0%, 100% { transform: translateY(-2px); }
+  50% { transform: translateY(3px); }
+}
+
+/* Durante a comemoração do pedido, a tela não aceita cliques. */
+.bloqueado #app {
+  pointer-events: none;
+}
+
 /* Centraliza as prateleiras quando sobram poucas; com muitas, rola normalmente. */
 .estante-conteudo {
   margin-block: auto;
@@ -647,20 +713,27 @@ button {
 }
 
 .ficha-acoes .btn {
-  flex: 1 1 160px;
+  flex: 1 1 150px;
+}
+
+.ficha-acoes .btn.primario {
+  flex-grow: 1.6;
 }
 
 /* ---------- Gaveta do carrinho ---------- */
 
 .camada-gaveta {
   place-items: stretch end;
+  grid-template-rows: minmax(0, 1fr);
   padding: 0;
 }
 
+/* A gaveta ocupa a altura da tela: só a lista rola; topo e rodapé ficam fixos. */
 .gaveta {
   position: relative;
   width: min(440px, 100vw);
-  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: var(--painel);
@@ -695,9 +768,16 @@ button {
   line-height: 1.1;
 }
 
+.gaveta-topo,
+.gaveta-rodape {
+  flex: none;
+}
+
 .gaveta-corpo {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 6px 14px;
 }
 
@@ -850,6 +930,25 @@ button {
   list-style: none;
   margin: 16px 0 8px;
   padding: 0;
+}
+
+/* Na revisão, só a lista de itens rola; total, campo e botões ficam visíveis. */
+.painel-pedido {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.painel-pedido > * {
+  flex: none;
+}
+
+.painel-pedido > .resumo {
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
 }
 
 .resumo li {
@@ -1248,6 +1347,18 @@ summary {
 
 .amostra-futurista {
   background: conic-gradient(#37f0ff 0 33%, #ff3ea5 0 66%, #070d2b 0);
+}
+
+.amostra-pirata {
+  background: conic-gradient(#e8b53a 0 33%, #a8322b 0 66%, #12283a 0);
+}
+
+.amostra-faroeste {
+  background: conic-gradient(#f0a25e 0 33%, #4d7a3a 0 66%, #b23a2a 0);
+}
+
+.amostra-mar {
+  background: conic-gradient(#7ae0d0 0 33%, #ff7a8a 0 66%, #0a5570 0);
 }
 
 /* ---------- Responsivo ---------- */

@@ -1,0 +1,330 @@
+/* Tema pirata: noite no convés, lua, ondas e lanternas; prateleiras de tábua amarradas com corda e etiquetas de mapa. */
+
+[data-tema='pirata'] {
+  --fundo: #0f2233;
+  --texto: #f1e6cc;
+  --texto-suave: #a9b8c4;
+  --titulo-cor: #e8b53a;
+  --titulo-sombra: 0 3px 0 #3b2211, 0 0 20px rgba(232, 181, 58, 0.35);
+  --destaque: #a8322b;
+  --destaque-texto: #fbeed2;
+  --destaque-borda: #e8b53a;
+  --painel: #e9d6a8;
+  --painel-texto: #2e1d10;
+  --painel-suave: #6e5334;
+  --painel-borda: #9c7a4a;
+  --painel-preco: #a8322b;
+  --painel-sombra: 0 30px 70px rgba(0, 0, 0, 0.6);
+  --palco: radial-gradient(circle, rgba(232, 181, 58, 0.32), rgba(232, 181, 58, 0) 70%);
+  --campo-bg: rgba(255, 255, 255, 0.45);
+  --fonte-titulo: 'Pirata One', Georgia, serif;
+  --fonte-texto: 'Spectral', Georgia, serif;
+  --fonte-rotulo: 'Spectral SC', Georgia, serif;
+  --contorno: #2a1810;
+  --raio-btn: 4px;
+  --raio-pilula: 999px;
+  --raio-aba: 4px 4px 0 0;
+  --controle-bg: rgba(10, 24, 38, 0.75);
+  --controle-borda: rgba(232, 181, 58, 0.4);
+  --aba-bg: #1d3a52;
+  --aba-borda: #0a1826;
+  --aba-texto: #d9e4ec;
+  --aba-ativa-bg: #e8b53a;
+  --aba-ativa-texto: #2a1808;
+  --aba-ativa-borda: #fff3c2;
+  --placa-bg: #e9d6a8;
+  --placa-texto: #2e1d10;
+  --placa-preco: #a8322b;
+  --fonte-placa: 'Spectral', Georgia, serif;
+  --contador-bg: #e8b53a;
+  --contador-texto: #2a1808;
+  --contador-sombra: 0 0 0 2px #7a4f0e, 0 3px 8px rgba(0, 0, 0, 0.5);
+  --aviso-bg: #e9d6a8;
+  --aviso-texto: #2e1d10;
+  --veu: rgba(4, 12, 20, 0.7);
+  --foco: #e8b53a;
+  --perigo: #a8322b;
+  --clarao: radial-gradient(circle at 50% 85%, rgba(232, 181, 58, 0.5), rgba(232, 181, 58, 0) 70%);
+
+  background:
+    radial-gradient(ellipse 50% 35% at 85% 8%, rgba(255, 240, 190, 0.14), transparent 70%),
+    linear-gradient(#08141f 0%, #10283d 50%, #173a57 100%);
+}
+
+[data-tema='pirata'] .titulo {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: 0.02em;
+}
+
+/* Lua, lanternas e mar */
+[data-tema='pirata'] .lua {
+  position: absolute;
+  top: 7%;
+  right: 14%;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fffbe8, #f2e3b0 60%, #d9c58a);
+  box-shadow: 0 0 70px 24px rgba(255, 240, 190, 0.22);
+}
+
+[data-tema='pirata'] .lua::after {
+  content: '';
+  position: absolute;
+  inset: 18% 20% 40% 45%;
+  border-radius: 50%;
+  background: rgba(190, 170, 110, 0.35);
+}
+
+[data-tema='pirata'] .lanterna {
+  position: absolute;
+  top: 150px;
+  width: 34px;
+  height: 170px;
+  transform-origin: 50% 0;
+  animation: lanterna 4.5s ease-in-out infinite;
+}
+
+[data-tema='pirata'] .lanterna::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 0;
+  width: 2px;
+  height: 112px;
+  background: #6b4220;
+}
+
+[data-tema='pirata'] .lanterna .luz {
+  position: absolute;
+  top: 108px;
+  left: 2px;
+  width: 30px;
+  height: 42px;
+  border: 3px solid #3b3f45;
+  border-radius: 6px 6px 10px 10px;
+  background: radial-gradient(circle at 50% 55%, #fff3c2 0 22%, #f2b13b 55%, #9c6a38 56%);
+  box-shadow: 0 0 60px 22px rgba(255, 190, 80, 0.28);
+}
+
+[data-tema='pirata'] .lanterna.esq {
+  left: 3%;
+}
+
+[data-tema='pirata'] .lanterna.dir {
+  right: 3%;
+  animation-delay: -2.2s;
+}
+
+@keyframes lanterna {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+
+[data-tema='pirata'] .onda {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-repeat: repeat-x;
+  background-size: 400px 100%;
+  animation: onda 9s linear infinite;
+}
+
+[data-tema='pirata'] .onda-1 {
+  height: 150px;
+  opacity: 0.7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cpath d='M0 30 Q50 0 100 30 T200 30 T300 30 T400 30 V100 H0z' fill='%23133a58'/%3E%3C/svg%3E");
+}
+
+[data-tema='pirata'] .onda-2 {
+  height: 110px;
+  opacity: 0.85;
+  animation-duration: 6.5s;
+  animation-direction: reverse;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cpath d='M0 30 Q50 0 100 30 T200 30 T300 30 T400 30 V100 H0z' fill='%231a4c70'/%3E%3C/svg%3E");
+}
+
+[data-tema='pirata'] .onda-3 {
+  height: 70px;
+  animation-duration: 4.5s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cpath d='M0 30 Q50 0 100 30 T200 30 T300 30 T400 30 V100 H0z' fill='%23225f88'/%3E%3C/svg%3E");
+}
+
+@keyframes onda {
+  to { background-position-x: 400px; }
+}
+
+@media (max-width: 1100px) {
+  [data-tema='pirata'] .lanterna {
+    display: none;
+  }
+}
+
+/* Abas como bandeirolas */
+[data-tema='pirata'] .aba {
+  border-bottom: 3px solid #0a1826;
+}
+
+/* Prateleiras de tábua com amarração de corda */
+[data-tema='pirata'] .prateleira {
+  --tabua: 20px;
+}
+
+[data-tema='pirata'] .prateleira-tabua {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 70px, rgba(0, 0, 0, 0.15) 70px 72px),
+    linear-gradient(#a8743f, #7a4a22 55%, #4a2c14);
+  border-top: 2px solid #c9975a;
+  border-radius: 2px;
+  box-shadow: 0 14px 18px -8px rgba(0, 0, 0, 0.75);
+}
+
+[data-tema='pirata'] .prateleira-tabua::before,
+[data-tema='pirata'] .prateleira-tabua::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 16px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(35deg, #d9b67a 0 3px, #8a6a3a 3px 6px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+[data-tema='pirata'] .prateleira-tabua::before {
+  left: 6%;
+}
+
+[data-tema='pirata'] .prateleira-tabua::after {
+  right: 6%;
+}
+
+[data-tema='pirata'] .item-icone .ic {
+  filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.5));
+  animation: balanco-navio 5s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.4s);
+  transform-origin: 50% 90%;
+}
+
+@keyframes balanco-navio {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+[data-tema='pirata'] .item:hover .item-icone {
+  filter: drop-shadow(0 0 14px rgba(232, 181, 58, 0.6));
+}
+
+/* Etiqueta de mapa rasgado */
+[data-tema='pirata'] .item-placa {
+  position: relative;
+  padding: 7px 12px 8px;
+  background: linear-gradient(135deg, #f1e0b4, #dcc28c);
+  clip-path: polygon(0 4%, 12% 0, 30% 5%, 50% 0, 70% 4%, 88% 0, 100% 5%, 98% 50%, 100% 96%, 84% 100%, 64% 95%, 44% 100%, 24% 96%, 6% 100%, 0 94%, 2% 50%);
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4));
+}
+
+/* Receptáculo: barril boiando */
+[data-tema='pirata'] .receptaculo .brilho-chao {
+  fill: #7fd3ff;
+  opacity: 0.12;
+}
+
+[data-tema='pirata'] .receptaculo .receptaculo-svg {
+  animation: boiar 4s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+
+[data-tema='pirata'] .receptaculo.recebendo .receptaculo-svg {
+  animation: receber 0.8s ease-out;
+}
+
+[data-tema='pirata'] .receptaculo.esvaziando .receptaculo-svg {
+  animation: tremer 0.6s ease-in-out;
+}
+
+[data-tema='pirata'] .receptaculo .ondas {
+  animation: ondinha 2.4s linear infinite;
+}
+
+[data-tema='pirata'] .receptaculo .tampa {
+  transform-origin: 100px 47px;
+  transition: transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+[data-tema='pirata'] .receptaculo:hover .tampa,
+[data-tema='pirata'] .receptaculo.aberto .tampa {
+  transform: translateY(-8px) rotate(-6deg);
+}
+
+[data-tema='pirata'] .receptaculo.recebendo .tampa {
+  animation: tampa-barril 0.8s ease-out;
+}
+
+[data-tema='pirata'] .receptaculo.enviando .tampa {
+  animation: tampa-barril 0.7s ease-out 2;
+}
+
+@keyframes boiar {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50% { transform: translateY(-4px) rotate(1.5deg); }
+}
+
+@keyframes ondinha {
+  to { transform: translateX(40px); }
+}
+
+@keyframes tampa-barril {
+  0% { transform: none; }
+  30% { transform: translateY(-30px) rotate(-18deg); }
+  70% { transform: translateY(2px) rotate(3deg); }
+  100% { transform: none; }
+}
+
+/* Ficha: mapa que se abre para os lados */
+[data-tema='pirata'] .ficha,
+[data-tema='pirata'] .painel,
+[data-tema='pirata'] .gaveta {
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(120, 70, 20, 0.35) 100%),
+    linear-gradient(135deg, #f1e0b4, #e2cb96);
+}
+
+[data-tema='pirata'] .ficha,
+[data-tema='pirata'] .painel {
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 2px rgba(110, 83, 52, 0.4), var(--painel-sombra);
+}
+
+[data-tema='pirata'] .camada-ficha.entrando .ficha {
+  animation: mapa-abre 0.6s cubic-bezier(0.3, 0.9, 0.3, 1) both;
+}
+
+@keyframes mapa-abre {
+  from { clip-path: inset(0 50% 0 50%); transform: rotate(-2deg); }
+  to { clip-path: inset(-10px -10px -10px -10px); transform: none; }
+}
+
+[data-tema='pirata'] .painel-pedido.sucesso .selo svg {
+  animation: moeda-gira 1.2s ease-out;
+}
+
+@keyframes moeda-gira {
+  from { transform: rotateY(720deg) scale(0.3); }
+  to { transform: none; }
+}
+
+/* Indicador de mais itens: pedaço de mapa */
+[data-tema='pirata'] .indicador-mais {
+  border: 0;
+  border-radius: 0;
+  padding: 9px 18px;
+  background: linear-gradient(135deg, #f1e0b4, #dcc28c);
+  color: #2e1d10;
+  clip-path: polygon(0 6%, 15% 0, 40% 6%, 65% 0, 88% 5%, 100% 0, 98% 50%, 100% 94%, 80% 100%, 55% 94%, 30% 100%, 8% 95%, 0 100%, 2% 50%);
+}
+
+[data-tema='pirata'] .indicador-mais svg {
+  color: #a8322b;
+}

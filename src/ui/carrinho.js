@@ -7,7 +7,7 @@ import {
 import { svgIcone, apelido } from '../temas.js';
 import { infoTipo } from '../tipos.js';
 import { tocar } from '../sons.js';
-import { pulsarClasse, voar } from '../efeitos.js';
+import { pulsarClasse, voar, movimentoReduzido } from '../efeitos.js';
 import { $, $$, app, brl, escapar, plural, tema, textos, avisar, abrirCamada, fecharCamada, esperarAnimacao } from './comum.js';
 
 // ---------- Receptáculo ----------
@@ -38,12 +38,6 @@ export function alvoBoca(tamanho = 44) {
   return { left: x - tamanho / 2, top: y - tamanho / 2, width: tamanho, height: tamanho, x, y };
 }
 
-const CORES_EXPLOSAO = {
-  bruxo: ['#7cff6b', '#c8ffb0', '#fff3b0'],
-  medieval: ['#f2c14e', '#ffe7a0', '#ff9a3c'],
-  futurista: ['#37f0ff', '#ffffff', '#ff3ea5'],
-};
-
 /** Efeito de chegada de um item no receptáculo. */
 export function receber(produto) {
   const botao = $('.receptaculo');
@@ -52,7 +46,7 @@ export function receber(produto) {
   pulsarClasse(botao, 'recebendo', 900);
   pulsarClasse($('.contador'), 'saltando', 500);
   const boca = alvoBoca();
-  const cores = [...CORES_EXPLOSAO[estado.tema], ...(info.cor ? [info.cor] : [])];
+  const cores = [...tema().explosao, ...(info.cor ? [info.cor] : [])];
   app.particulas.explodir(boca.x, boca.y, { cores, qtd: 34, forca: 6, subir: true, gravidade: 0.16 });
   tocar('adicionar');
 }
@@ -155,20 +149,6 @@ async function esvaziar(botao) {
 
 const camadaPedido = () => $('.camada-pedido');
 
-const SELOS = {
-  bruxo: `<svg viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="#f4c35a" stroke-width="2">
-      <circle cx="60" cy="60" r="52"/><circle cx="60" cy="60" r="44" stroke-dasharray="3 5"/>
-      <path d="M60 14 L73 47 L106 60 L73 73 L60 106 L47 73 L14 60 L47 47Z" fill="rgba(244,195,90,.18)"/>
-      <circle cx="60" cy="60" r="12" fill="#f4c35a"/></g></svg>`,
-  medieval: `<svg viewBox="0 0 120 120" aria-hidden="true">
-      <path d="M60 6 q14 4 22 2 q8 8 18 10 q2 12 10 20 q-2 12 4 22 q-6 10 -4 22 q-10 6 -12 18 q-12 0 -20 8 q-12 -4 -22 0 q-8 -8 -20 -8 q-2 -12 -12 -18 q2 -12 -4 -22 q6 -10 4 -22 q8 -8 10 -20 q10 -2 18 -10 q8 2 18 -2z" fill="#9e1b1b"/>
-      <circle cx="60" cy="60" r="36" fill="#b92525" stroke="#7a1010" stroke-width="3"/>
-      <text x="60" y="76" text-anchor="middle" font-family="UnifrakturMaguntia, serif" font-size="46" fill="#7a1010">D</text></svg>`,
-  futurista: `<svg viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="#37f0ff" stroke-width="3">
-      <path d="M60 8 L105 34 V86 L60 112 L15 86 V34Z"/><path d="M60 20 L95 40 V80 L60 100 L25 80 V40Z" stroke-width="1.5" stroke-dasharray="6 4"/>
-      <path d="M40 60 l14 14 l28 -30" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,
-};
-
 function htmlRevisao() {
   const t = textos();
   const linhas = linhasCarrinho();
@@ -189,7 +169,7 @@ function htmlSucesso(pedido) {
   const t = textos();
   const numero = String(pedido.numero).padStart(3, '0');
   return `
-    <div class="selo">${SELOS[estado.tema]}</div>
+    <div class="selo">${tema().selo}</div>
     <h2 id="pedido-titulo">${t.sucessoTitulo}</h2>
     <p class="numero-pedido">Pedido nº <strong>${numero}</strong>${pedido.identificacao ? `<span class="pedido-id">${escapar(pedido.identificacao)}</span>` : ''}</p>
     <p class="sucesso-texto">${t.sucessoTexto}</p>
@@ -214,13 +194,24 @@ async function fecharPedidoCamada() {
   fecharCamada(camada);
 }
 
+const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
+let confirmando = false;
+
 async function confirmar() {
-  const painel = $('.painel-pedido');
+  if (confirmando) return;
+  confirmando = true;
+  const camada = camadaPedido();
+  const painel = $('.painel-pedido', camada);
   const identificacao = $('input[name="identificacao"]', painel)?.value;
   const pedido = fecharPedido(identificacao);
-  tocar('confirmar');
+  $$('button, input', painel).forEach((el) => (el.disabled = true));
 
-  // Ícones dos itens sobem do receptáculo como numa "entrega".
+  // 1) Tira o painel da frente e trava a tela para a comemoração aparecer inteira.
+  document.body.classList.add('bloqueado');
+  await fecharPedidoCamada();
+
+  // 2) Comemoração: os itens saem do receptáculo, explosão de partículas e clarão.
+  tocar('confirmar');
   const boca = alvoBoca(56);
   pedido.itens.slice(0, 6).forEach((item, i) => {
     const produto = estado.produtos.find((p) => p.nome === item.nome);
@@ -228,21 +219,23 @@ async function confirmar() {
     setTimeout(async () => {
       const destino = { left: boca.left + (i - 2.5) * 70, top: -120, width: 56, height: 56 };
       const v = await voar(svgIcone(estado.tema, produto.tipo), boca, destino, {
-        arco: 40, duracao: 900, girar: (i % 2 ? 1 : -1) * 90, opacidadeFinal: 0, atras: true,
+        arco: 40, duracao: 900, girar: (i % 2 ? 1 : -1) * 90, opacidadeFinal: 0,
       });
       v.remove();
     }, i * 90);
   });
-
   document.body.classList.add('celebrando');
   pulsarClasse($('.receptaculo'), 'enviando', 1400);
-  app.particulas.explodir(boca.x, boca.y, { cores: CORES_EXPLOSAO[estado.tema], qtd: 90, forca: 11, subir: true, gravidade: 0.14, tam: [2, 5] });
-  setTimeout(() => document.body.classList.remove('celebrando'), 1600);
+  app.particulas.explodir(boca.x, boca.y, { cores: tema().explosao, qtd: 90, forca: 11, subir: true, gravidade: 0.14, tam: [2, 5] });
   $('.receptaculo').style.removeProperty('--caldo');
+  await esperar(movimentoReduzido() ? 300 : 1800);
+  document.body.classList.remove('celebrando', 'bloqueado');
 
+  // 3) Só então mostra o resumo do pedido.
   painel.classList.add('sucesso');
   painel.innerHTML = htmlSucesso(pedido);
-  $('[data-acao="novo-pedido"]', painel).focus();
+  abrirCamada(camada, { aoFechar: fecharPedidoCamada, focar: $('[data-acao="novo-pedido"]', painel) });
+  confirmando = false;
 }
 
 // ---------- Eventos ----------
