@@ -1,8 +1,8 @@
 import { estado, assinar, iniciarLoja, definirTema, alternarSom } from './loja.js';
 import { TEMAS, LISTA_TEMAS } from './temas.js';
-import { criarParticulas, movimentoReduzido } from './efeitos.js';
+import { criarParticulas } from './efeitos.js';
 import { tocar } from './sons.js';
-import { $, $$, app, textos, camadaAberta } from './ui/comum.js';
+import { $, $$, app, textos, camadaAberta, htmlIndicadorMais } from './ui/comum.js';
 import { iniciarEstante, renderizarEstante } from './ui/estante.js';
 import { iniciarFicha, abrirFicha } from './ui/ficha.js';
 import { iniciarCarrinho, renderizarReceptaculo, atualizarReceptaculo, renderizarGaveta } from './ui/carrinho.js';
@@ -38,11 +38,10 @@ function montarEstrutura() {
         <div class="abas" role="tablist"></div>
         <button class="seta proxima" data-acao="proxima">${SETA}</button>
       </nav>
-      <section class="estante" id="estante" role="tabpanel">
+      <section class="estante rolagem-tematica" id="estante" role="tabpanel">
         <div class="estante-conteudo"></div>
       </section>
-      <button class="indicador-mais" data-acao="rolar-mais" tabindex="-1" aria-hidden="true">
-        <span class="indicador-texto"></span>
+      <button class="indicador-mais" tabindex="-1" aria-hidden="true">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </main>
@@ -88,7 +87,10 @@ function montarEstrutura() {
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
           </button>
         </header>
-        <div class="gaveta-corpo"></div>
+        <div class="gaveta-lista">
+          <div class="gaveta-corpo rolagem-tematica"></div>
+          ${htmlIndicadorMais()}
+        </div>
         <footer class="gaveta-rodape"></footer>
       </aside>
     </div>
@@ -177,7 +179,7 @@ async function trocarTema(id) {
   if (id === estado.tema || trocando || camadaAberta()) return;
   trocando = true;
   const cortina = $('.cortina');
-  const espera = movimentoReduzido() ? 0 : 320;
+  const espera = 320;
   cortina.classList.add('fechada');
   await new Promise((r) => setTimeout(r, espera));
   definirTema(id);

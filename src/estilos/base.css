@@ -224,27 +224,38 @@ button {
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--controle-borda) transparent;
   touch-action: pan-y;
   display: flex;
   flex-direction: column;
 }
 
-/* Esmaece as bordas quando há conteúdo escondido acima ou abaixo. */
-.estante {
+/* Listas roláveis com o visual do tema: barra fina na cor do tema e bordas que esmaecem
+   quando há conteúdo escondido acima ou abaixo. */
+.rolagem-tematica {
   --fade-topo: 0px;
   --fade-base: 0px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cor-rolagem, var(--controle-borda)) transparent;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fade-topo), #000 calc(100% - var(--fade-base)), transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fade-topo), #000 calc(100% - var(--fade-base)), transparent 100%);
 }
 
-.estante.rolou {
-  --fade-topo: 28px;
+.rolagem-tematica.rolou {
+  --fade-topo: 24px;
+}
+
+.rolagem-tematica.tem-mais {
+  --fade-base: 56px;
 }
 
 .estante.tem-mais {
   --fade-base: 64px;
+}
+
+/* Dentro dos painéis a barra usa a cor da borda do painel. */
+.gaveta .rolagem-tematica,
+.painel .rolagem-tematica {
+  --cor-rolagem: var(--painel-borda);
 }
 
 /* Aviso de "mais itens abaixo" (cada tema dá o seu visual). */
@@ -254,10 +265,11 @@ button {
   z-index: 3;
   left: 50%;
   bottom: 34px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   border: 1px solid var(--controle-borda);
   border-radius: var(--raio-pilula);
   background: var(--controle-bg);
@@ -281,8 +293,8 @@ button {
 }
 
 .indicador-mais svg {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   flex: none;
   animation: seta-desce 1.2s ease-in-out infinite;
 }
@@ -773,6 +785,14 @@ button {
   flex: none;
 }
 
+.gaveta-lista {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .gaveta-corpo {
   flex: 1;
   min-height: 0;
@@ -943,12 +963,26 @@ button {
   flex: none;
 }
 
-.painel-pedido > .resumo {
+.painel-pedido > .resumo-lista {
+  position: relative;
   flex: 0 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.resumo-lista > .resumo {
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
   padding-right: 4px;
+}
+
+/* A seta dentro das listas dos painéis fica logo acima do fim da lista. */
+.gaveta-lista > .indicador-mais,
+.resumo-lista > .indicador-mais {
+  bottom: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .resumo li {
@@ -1361,6 +1395,10 @@ summary {
   background: conic-gradient(#7ae0d0 0 33%, #ff7a8a 0 66%, #0a5570 0);
 }
 
+.amostra-guilda {
+  background: conic-gradient(#c9962e 0 33%, #2f6b4f 0 66%, #1d2b24 0);
+}
+
 /* ---------- Responsivo ---------- */
 
 @media (max-width: 720px) {
@@ -1418,15 +1456,5 @@ summary {
 @media (max-height: 720px) {
   .receptaculo {
     width: clamp(110px, 14vw, 150px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
   }
 }

@@ -7,8 +7,11 @@ import {
 import { svgIcone, apelido } from '../temas.js';
 import { infoTipo } from '../tipos.js';
 import { tocar } from '../sons.js';
-import { pulsarClasse, voar, movimentoReduzido } from '../efeitos.js';
-import { $, $$, app, brl, escapar, plural, tema, textos, avisar, abrirCamada, fecharCamada, esperarAnimacao } from './comum.js';
+import { pulsarClasse, voar } from '../efeitos.js';
+import {
+  $, $$, app, brl, escapar, plural, tema, textos, avisar, abrirCamada, fecharCamada, esperarAnimacao,
+  htmlIndicadorMais, ligarRolagem,
+} from './comum.js';
 
 // ---------- Receptáculo ----------
 
@@ -55,6 +58,7 @@ export function receber(produto) {
 
 const camadaGaveta = () => $('.camada-gaveta');
 let confirmandoEsvaziar = null;
+let atualizarRolagemGaveta = null;
 
 function htmlLinha(l) {
   return `
@@ -86,6 +90,8 @@ export function renderizarGaveta() {
   $('.gaveta-corpo', camada).innerHTML = linhas.length
     ? `<ul class="linhas">${linhas.map(htmlLinha).join('')}</ul>`
     : `<p class="gaveta-vazia">${t.vazio}</p>`;
+  atualizarRolagemGaveta ??= ligarRolagem($('.gaveta-corpo', camada), $('.gaveta-lista .indicador-mais', camada));
+  requestAnimationFrame(atualizarRolagemGaveta);
   $('.gaveta-rodape', camada).innerHTML = `
     <div class="total"><span>Total</span><strong>${brl(totalCarrinho())}</strong></div>
     <div class="acoes">
@@ -154,9 +160,12 @@ function htmlRevisao() {
   const linhas = linhasCarrinho();
   return `
     <h2 id="pedido-titulo">Revise seu pedido</h2>
-    <ul class="resumo">${linhas
-      .map((l) => `<li><span>${l.qtd}× ${escapar(l.produto.nome)}</span><span>${brl(l.qtd * l.produto.preco)}</span></li>`)
-      .join('')}</ul>
+    <div class="resumo-lista">
+      <ul class="resumo rolagem-tematica">${linhas
+        .map((l) => `<li><span>${l.qtd}× ${escapar(l.produto.nome)}</span><span>${brl(l.qtd * l.produto.preco)}</span></li>`)
+        .join('')}</ul>
+      ${htmlIndicadorMais()}
+    </div>
     <div class="total"><span>Total</span><strong>${brl(totalCarrinho())}</strong></div>
     <label class="campo"><span>Nome ou mesa (opcional)</span><input name="identificacao" maxlength="40" autocomplete="off" /></label>
     <div class="acoes">
@@ -184,6 +193,7 @@ async function abrirPedido() {
   painel.classList.remove('sucesso');
   painel.innerHTML = htmlRevisao();
   abrirCamada(camada, { aoFechar: fecharPedidoCamada, focar: $('[data-acao="confirmar-pedido"]', painel) });
+  ligarRolagem($('.resumo', painel), $('.resumo-lista .indicador-mais', painel), { observar: false });
 }
 
 async function fecharPedidoCamada() {
@@ -228,7 +238,7 @@ async function confirmar() {
   pulsarClasse($('.receptaculo'), 'enviando', 1400);
   app.particulas.explodir(boca.x, boca.y, { cores: tema().explosao, qtd: 90, forca: 11, subir: true, gravidade: 0.14, tam: [2, 5] });
   $('.receptaculo').style.removeProperty('--caldo');
-  await esperar(movimentoReduzido() ? 300 : 1800);
+  await esperar(1800);
   document.body.classList.remove('celebrando', 'bloqueado');
 
   // 3) Só então mostra o resumo do pedido.

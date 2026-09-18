@@ -3,8 +3,7 @@
 import { estado, categorias } from '../loja.js';
 import { svgIcone } from '../temas.js';
 import { tocar } from '../sons.js';
-import { movimentoReduzido } from '../efeitos.js';
-import { $, $$, brl, escapar, plural, camadaAberta } from './comum.js';
+import { $, $$, brl, escapar, plural, camadaAberta, ligarRolagem } from './comum.js';
 
 let indice = 0;
 let colunasAtuais = 0;
@@ -75,7 +74,7 @@ export function renderizarEstante(direcao = 0, { animarItens = true } = {}) {
     .join('');
 
   conteudo.classList.toggle('chegando', animarItens);
-  if (direcao && !movimentoReduzido()) {
+  if (direcao) {
     conteudo.animate(
       [{ opacity: 0, transform: `translateX(${direcao * 60}px)` }, { opacity: 1, transform: 'none' }],
       { duration: 380, easing: 'cubic-bezier(.2,.8,.2,1)' }
@@ -85,25 +84,21 @@ export function renderizarEstante(direcao = 0, { animarItens = true } = {}) {
   requestAnimationFrame(atualizarIndicador);
 }
 
-/** Mostra (ou esconde) o aviso de que há itens abaixo, com a contagem, e o esmaecimento das bordas. */
+let atualizarRolagem = () => {};
+
+/** Recalcula o esmaecimento das bordas e a seta de "mais itens abaixo". */
 export function atualizarIndicador() {
-  const estante = $('.estante');
-  const indicador = $('.indicador-mais');
-  const resto = estante.scrollHeight - estante.clientHeight - estante.scrollTop;
-  const temMais = resto > 8;
-  estante.classList.toggle('tem-mais', temMais);
-  estante.classList.toggle('rolou', estante.scrollTop > 8);
-  if (temMais) {
-    const limite = estante.getBoundingClientRect().bottom - 30;
-    const abaixo = $$('.item-icone', estante).filter((el) => {
-      const r = el.getBoundingClientRect();
-      return r.top + r.height / 2 > limite;
-    }).length;
-    $('.indicador-texto', indicador).textContent = abaixo ? `Mais ${plural(abaixo, 'item', 'itens')} abaixo` : 'Mais abaixo';
-  }
-  indicador.classList.toggle('visivel', temMais);
-  indicador.setAttribute('aria-hidden', String(!temMais));
-  indicador.tabIndex = temMais ? 0 : -1;
+  atualizarRolagem();
+}
+
+/** Quantos itens estão abaixo da área visível (para o texto acessível da seta). */
+function rotuloMais() {
+  const limite = $('.estante').getBoundingClientRect().bottom - 30;
+  const abaixo = $$('.estante .item-icone').filter((el) => {
+    const r = el.getBoundingClientRect();
+    return r.top + r.height / 2 > limite;
+  }).length;
+  return abaixo ? `Ver mais ${plural(abaixo, 'item', 'itens')} abaixo` : 'Ver mais itens abaixo';
 }
 
 export async function irPara(pedido) {
@@ -114,12 +109,10 @@ export async function irPara(pedido) {
   const direcao = pedido > indice ? 1 : -1;
   const minha = ++navegacao;
   tocar('nav');
-  if (!movimentoReduzido()) {
-    await $('.estante-conteudo').animate(
-      [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translateX(${-direcao * 50}px)` }],
-      { duration: 160, easing: 'ease-in', fill: 'forwards' }
-    ).finished;
-  }
+  await $('.estante-conteudo').animate(
+    [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translateX(${-direcao * 50}px)` }],
+    { duration: 160, easing: 'ease-in', fill: 'forwards' }
+  ).finished;
   if (minha !== navegacao) return;
   indice = novo;
   $('.estante-conteudo').getAnimations().forEach((a) => a.cancel());
@@ -150,19 +143,7 @@ export function iniciarEstante({ aoEscolher }) {
     if (item) aoEscolher(item.dataset.id, item);
   });
 
-  let agendado = false;
-  estante.addEventListener('scroll', () => {
-    if (agendado) return;
-    agendado = true;
-    requestAnimationFrame(() => {
-      agendado = false;
-      atualizarIndicador();
-    });
-  }, { passive: true });
-
-  $('.indicador-mais').addEventListener('click', () => {
-    estante.scrollBy({ top: estante.clientHeight * 0.75, behavior: movimentoReduzido() ? 'auto' : 'smooth' });
-  });
+  atualizarRolagem = ligarRolagem(estante, $('.indicador-mais'), { rotulo: rotuloMais });
 
   // Deslizar o dedo troca de prateleira.
   let inicio = null;

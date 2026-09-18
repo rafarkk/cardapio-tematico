@@ -1,6 +1,6 @@
 # Cardápio Temático
 
-Cardápio animado com seis "skins": **Bruxo**, **Medieval**, **Futurista**, **Pirata**, **Faroeste** e **Fundo do mar**. Os itens ficam em prateleiras separadas por categoria; ao tocar num item ele vem para a frente com a ficha, e ao adicionar ele voa para o receptáculo do tema (caldeirão, baú, teleportador, barril, carrinho de mina ou concha). Dali dá para revisar, esvaziar e fechar o pedido.
+Cardápio animado com sete "skins": **Bruxo**, **Medieval**, **Futurista**, **Pirata**, **Faroeste**, **Fundo do mar** e **Guilda dos Aventureiros**. Os itens ficam em prateleiras separadas por categoria; ao tocar num item ele vem para a frente com a ficha, e ao adicionar ele voa para o receptáculo do tema (caldeirão, baú, teleportador, baú do tesouro, carrinho de mina, concha ou mochila). Dali dá para revisar, esvaziar e fechar o pedido.
 
 ## Rodar
 
@@ -10,7 +10,7 @@ Cardápio animado com seis "skins": **Bruxo**, **Medieval**, **Futurista**, **Pi
 - `python -m http.server` na pasta do projeto (abre em http://localhost:8000), ou
 - IIS, Apache, Nginx, qualquer hospedagem estática.
 
-Para trocar de tema, use o botão de paleta no canto inferior esquerdo (ferramenta de teste) ou a URL: `?tema=bruxo`, `medieval`, `futurista`, `pirata`, `faroeste` ou `mar`.
+Para trocar de tema, use o botão de paleta no canto inferior esquerdo (ferramenta de teste) ou a URL: `?tema=bruxo`, `medieval`, `futurista`, `pirata`, `faroeste`, `mar` ou `guilda`.
 
 ## Produtos
 

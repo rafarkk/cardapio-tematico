@@ -1,4 +1,4 @@
-// Tema pirata: bebidas em cocos, garrafas, cantis e canecas de lata; comidas servidas na tampa de um barril.
+// Tema pirata: bebidas em cocos, garrafas de caveira, cantis e canecas de lata; comidas servidas na tampa de um barril.
 
 import { BASE, T, vapor } from './base.js';
 import { faiscas } from './util.js';
@@ -17,6 +17,12 @@ const caveira = `<g transform="translate(50 67)">
   <circle cx="0" cy="-2" r="5.5" fill="#3b2616"/><rect x="-3" y="2" width="6" height="4" rx="1" fill="#3b2616"/>
   <circle cx="-2" cy="-2" r="1.4" fill="#efe0bd"/><circle cx="2" cy="-2" r="1.4" fill="#efe0bd"/></g>`;
 
+/** Palitinho com a bandeira pirata. */
+const bandeirinha = `
+  <path d="M50 20 V2" stroke="#6e4523" stroke-width="2.5"/>
+  <path class="fx-bandeira" d="M50 3 h22 l-3 5 l3 5 h-22z" fill="#141414" stroke="#2a1810" stroke-width="1.4"/>
+  <circle cx="59" cy="7" r="2.6" fill="#f1e6cc"/><path d="M55.5 11 l7 0" stroke="#f1e6cc" stroke-width="1.2"/>`;
+
 const DESENHOS = {
   suco: (i) => coco(i.cor),
   shake: (i) => coco(i.cor, { creme: true }),
@@ -28,6 +34,7 @@ const DESENHOS = {
   quente: (i) => canecaLata(i.cor, { quente: true }),
 
   peixe: () => naTampa(`${BASE.peixe()}${vapor(50, 44)}`),
+  hamburguer: () => naTampa(`${BASE.hamburguer()}${bandeirinha}`),
 };
 
 export function iconePirata(tipo, info) {

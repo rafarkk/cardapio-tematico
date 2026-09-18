@@ -1,4 +1,4 @@
-/* Tema pirata: noite no convés, lua, ondas e lanternas; prateleiras de tábua amarradas com corda e etiquetas de mapa. */
+/* Tema pirata: noite no mar com lua, galeão, bandeira pirata e o Kraken; prateleiras amarradas com corda e etiquetas de mapa. */
 
 [data-tema='pirata'] {
   --fundo: #0f2233;
@@ -56,7 +56,7 @@
   letter-spacing: 0.02em;
 }
 
-/* Lua, lanternas e mar */
+/* Lua e mar */
 [data-tema='pirata'] .lua {
   position: absolute;
   top: 7%;
@@ -76,49 +76,88 @@
   background: rgba(190, 170, 110, 0.35);
 }
 
-[data-tema='pirata'] .lanterna {
+/* Galeão no horizonte, bandeira pirata e tentáculos do Kraken */
+[data-tema='pirata'] .navio {
   position: absolute;
-  top: 150px;
-  width: 34px;
-  height: 170px;
-  transform-origin: 50% 0;
-  animation: lanterna 4.5s ease-in-out infinite;
+  bottom: 118px;
+  left: 0;
+  width: 110px;
+  color: rgba(5, 14, 22, 0.75);
+  animation: navegar 80s linear infinite, balanco-navio 5s ease-in-out infinite;
 }
 
-[data-tema='pirata'] .lanterna::before {
+@keyframes navegar {
+  from { translate: -160px 0; }
+  to { translate: calc(100vw + 160px) 0; }
+}
+
+[data-tema='pirata'] .mastro {
+  position: absolute;
+  left: 1.2%;
+  top: 150px;
+  width: 92px;
+  height: 46vh;
+}
+
+[data-tema='pirata'] .mastro::before {
   content: '';
   position: absolute;
-  left: 16px;
-  top: 0;
-  width: 2px;
-  height: 112px;
-  background: #6b4220;
+  left: 0;
+  top: -8px;
+  bottom: 0;
+  width: 7px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #4a2c14, #8a5a2b, #4a2c14);
 }
 
-[data-tema='pirata'] .lanterna .luz {
+[data-tema='pirata'] .bandeira {
   position: absolute;
-  top: 108px;
-  left: 2px;
-  width: 30px;
-  height: 42px;
-  border: 3px solid #3b3f45;
-  border-radius: 6px 6px 10px 10px;
-  background: radial-gradient(circle at 50% 55%, #fff3c2 0 22%, #f2b13b 55%, #9c6a38 56%);
-  box-shadow: 0 0 60px 22px rgba(255, 190, 80, 0.28);
+  left: 7px;
+  top: 0;
+  width: 84px;
+  transform-origin: 0 50%;
+  animation: tremular-bandeira 1.6s ease-in-out infinite alternate;
 }
 
-[data-tema='pirata'] .lanterna.esq {
-  left: 3%;
+@keyframes tremular-bandeira {
+  from { transform: skewY(0deg) scaleX(1); }
+  to { transform: skewY(-5deg) scaleX(0.93); }
 }
 
-[data-tema='pirata'] .lanterna.dir {
-  right: 3%;
-  animation-delay: -2.2s;
+[data-tema='pirata'] .tentaculo {
+  position: absolute;
+  bottom: 40px;
+  width: 70px;
+  height: 180px;
+  transform-origin: 50% 100%;
+  animation: tentaculo 5.5s ease-in-out infinite alternate;
 }
 
-@keyframes lanterna {
-  0%, 100% { transform: rotate(-4deg); }
-  50% { transform: rotate(4deg); }
+[data-tema='pirata'] .tentaculo.esq {
+  left: 7%;
+}
+
+[data-tema='pirata'] .tentaculo.dir {
+  right: 7%;
+  scale: -1 1;
+  height: 150px;
+  animation-delay: -2.7s;
+}
+
+@keyframes tentaculo {
+  0% { transform: rotate(-7deg) translateY(10px); }
+  100% { transform: rotate(6deg) translateY(0); }
+}
+
+@media (max-width: 1100px) {
+  [data-tema='pirata'] .mastro {
+    display: none;
+  }
+
+  [data-tema='pirata'] .tentaculo {
+    width: 44px;
+    height: 110px;
+  }
 }
 
 [data-tema='pirata'] .onda {
@@ -153,12 +192,6 @@
 
 @keyframes onda {
   to { background-position-x: 400px; }
-}
-
-@media (max-width: 1100px) {
-  [data-tema='pirata'] .lanterna {
-    display: none;
-  }
 }
 
 /* Abas como bandeirolas */
@@ -225,60 +258,74 @@
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4));
 }
 
-/* Receptáculo: barril boiando */
+/* Receptáculo: baú do tesouro na praia */
 [data-tema='pirata'] .receptaculo .brilho-chao {
-  fill: #7fd3ff;
-  opacity: 0.12;
+  fill: #e8b53a;
+  opacity: 0.2;
 }
 
-[data-tema='pirata'] .receptaculo .receptaculo-svg {
-  animation: boiar 4s ease-in-out infinite;
-  transform-origin: 50% 90%;
+[data-tema='pirata'] .receptaculo .luz-tesouro path {
+  fill: rgba(255, 222, 130, 0.45);
 }
 
-[data-tema='pirata'] .receptaculo.recebendo .receptaculo-svg {
-  animation: receber 0.8s ease-out;
+/* Os raios só aparecem quando o baú abre ou recebe algo. */
+[data-tema='pirata'] .receptaculo .luz-tesouro {
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
-[data-tema='pirata'] .receptaculo.esvaziando .receptaculo-svg {
-  animation: tremer 0.6s ease-in-out;
-}
-
-[data-tema='pirata'] .receptaculo .ondas {
-  animation: ondinha 2.4s linear infinite;
+[data-tema='pirata'] .receptaculo.aberto .luz-tesouro {
+  opacity: 0.7;
 }
 
 [data-tema='pirata'] .receptaculo .tampa {
-  transform-origin: 100px 47px;
+  transform-origin: 100px 80px;
   transition: transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1);
 }
 
 [data-tema='pirata'] .receptaculo:hover .tampa,
 [data-tema='pirata'] .receptaculo.aberto .tampa {
-  transform: translateY(-8px) rotate(-6deg);
+  transform: translateY(-6px) scaleY(1.04);
+}
+
+[data-tema='pirata'] .receptaculo .faiscas-bau path {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: cintila 2.4s ease-in-out infinite;
+  animation-delay: var(--atraso);
+}
+
+[data-tema='pirata'] .receptaculo .tesouro {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+[data-tema='pirata'] .receptaculo.recebendo .tesouro,
+[data-tema='pirata'] .receptaculo.enviando .tesouro {
+  animation: tesouro-pula 0.8s ease-out;
 }
 
 [data-tema='pirata'] .receptaculo.recebendo .tampa {
-  animation: tampa-barril 0.8s ease-out;
+  animation: tampa-tesouro 0.8s ease-out;
 }
 
-[data-tema='pirata'] .receptaculo.enviando .tampa {
-  animation: tampa-barril 0.7s ease-out 2;
+[data-tema='pirata'] .receptaculo.recebendo .luz-tesouro,
+[data-tema='pirata'] .receptaculo.enviando .luz-tesouro {
+  animation: clarao 0.9s ease-out;
 }
 
-@keyframes boiar {
-  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
-  50% { transform: translateY(-4px) rotate(1.5deg); }
-}
-
-@keyframes ondinha {
-  to { transform: translateX(40px); }
-}
-
-@keyframes tampa-barril {
+@keyframes tesouro-pula {
   0% { transform: none; }
-  30% { transform: translateY(-30px) rotate(-18deg); }
-  70% { transform: translateY(2px) rotate(3deg); }
+  30% { transform: translateY(-8px) scale(1.04); }
+  60% { transform: translateY(2px) scale(0.98); }
+  100% { transform: none; }
+}
+
+@keyframes tampa-tesouro {
+  0% { transform: none; }
+  30% { transform: translateY(-14px) rotate(-4deg); }
+  70% { transform: translateY(2px); }
   100% { transform: none; }
 }
 
@@ -319,7 +366,6 @@
 [data-tema='pirata'] .indicador-mais {
   border: 0;
   border-radius: 0;
-  padding: 9px 18px;
   background: linear-gradient(135deg, #f1e0b4, #dcc28c);
   color: #2e1d10;
   clip-path: polygon(0 6%, 15% 0, 40% 6%, 65% 0, 88% 5%, 100% 0, 98% 50%, 100% 94%, 80% 100%, 55% 94%, 30% 100%, 8% 95%, 0 100%, 2% 50%);
@@ -327,4 +373,8 @@
 
 [data-tema='pirata'] .indicador-mais svg {
   color: #a8322b;
+}
+
+[data-tema='pirata'] :is(.gaveta, .painel) .indicador-mais {
+  background: linear-gradient(135deg, #d9b67a, #b8935a);
 }

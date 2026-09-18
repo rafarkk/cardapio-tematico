@@ -76,7 +76,7 @@ export function garrafa(cor, { tampa = 'rolha', rotulo = '#efe0bd', simbolo = ''
 }
 
 /** Garrafa bojuda com lacre de cera. */
-export function garrafaBojuda(cor, { lacre = '#a8322b' } = {}) {
+export function garrafaBojuda(cor, { lacre = '#a8322b', simbolo = null } = {}) {
   const corpo = 'M44 10 h12 v20 q20 6 20 30 q0 28 -26 28 q-26 0 -26 -28 q0 -24 20 -30z';
   return `
     <path d="${corpo}" fill="rgba(60,90,70,.35)"/>
@@ -84,7 +84,7 @@ export function garrafaBojuda(cor, { lacre = '#a8322b' } = {}) {
     ${T(`<path d="${corpo}" fill="none"/>`)}
     ${T(`<path d="M42 8 h16 v9 q-2 4 -4 0 q-2 5 -4 0 q-2 4 -4 0 q-2 3 -4 -1z" fill="${lacre}"/>`)}
     ${T('<circle cx="50" cy="66" r="10" fill="#efe0bd"/>')}
-    <path d="M45 61 l10 10 M55 61 l-10 10" stroke="#3b2616" stroke-width="2.2" stroke-linecap="round"/>
+    ${simbolo ?? '<path d="M45 61 l10 10 M55 61 l-10 10" stroke="#3b2616" stroke-width="2.2" stroke-linecap="round"/>'}
     ${brilho('M31 52 q-2 14 4 24')}`;
 }
 

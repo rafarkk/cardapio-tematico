@@ -89,3 +89,43 @@ export function esperarAnimacao(el, limite = 900) {
     el.addEventListener('animationend', fim);
   });
 }
+
+// ---------- Rolagem temática ----------
+
+/** Botão com a seta do tema que indica (e rola para) o conteúdo escondido abaixo. */
+export const htmlIndicadorMais = () => `
+  <button class="indicador-mais" tabindex="-1" aria-hidden="true" aria-label="Ver mais itens abaixo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>`;
+
+/**
+ * Liga uma lista rolável ao seu indicador: esmaece as bordas, mostra a seta quando há
+ * mais conteúdo abaixo e rola ao tocar nela. Retorna a função que recalcula o estado.
+ * `rotulo` (opcional) devolve o texto acessível do botão.
+ */
+export function ligarRolagem(lista, botao, { rotulo, observar = true } = {}) {
+  const atualizar = () => {
+    const temMais = lista.scrollHeight - lista.clientHeight - lista.scrollTop > 8;
+    lista.classList.toggle('tem-mais', temMais);
+    lista.classList.toggle('rolou', lista.scrollTop > 8);
+    botao.classList.toggle('visivel', temMais);
+    botao.setAttribute('aria-hidden', String(!temMais));
+    botao.tabIndex = temMais ? 0 : -1;
+    if (temMais && rotulo) botao.setAttribute('aria-label', rotulo());
+  };
+  let agendado = false;
+  lista.addEventListener('scroll', () => {
+    if (agendado) return;
+    agendado = true;
+    requestAnimationFrame(() => {
+      agendado = false;
+      atualizar();
+    });
+  }, { passive: true });
+  botao.addEventListener('click', () => {
+    lista.scrollBy({ top: lista.clientHeight * 0.75, behavior: 'smooth' });
+  });
+  if (observar) new ResizeObserver(atualizar).observe(lista);
+  requestAnimationFrame(atualizar);
+  return atualizar;
+}

@@ -1,7 +1,5 @@
 // Partículas de ambiente (canvas), explosões pontuais e o voo dos itens pela tela.
 
-export const movimentoReduzido = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 const aleatorio = (a, b) => a + Math.random() * (b - a);
 const escolher = (lista) => lista[Math.floor(Math.random() * lista.length)];
 
@@ -41,13 +39,11 @@ export function criarParticulas(canvas) {
 
   function definir(novaConfig) {
     config = novaConfig;
-    const qtd = movimentoReduzido() ? Math.round(novaConfig.qtd / 4) : novaConfig.qtd;
-    ambiente = Array.from({ length: qtd }, () => nova(true));
+    ambiente = Array.from({ length: novaConfig.qtd }, () => nova(true));
   }
 
   /** Explosão de partículas em (x, y) — usada quando algo cai no receptáculo. */
   function explodir(x, y, { cores = ['#fff'], qtd = 26, forca = 5, gravidade = 0.12, subir = false, tam = [1.5, 4] } = {}) {
-    if (movimentoReduzido()) qtd = Math.round(qtd / 3);
     for (let i = 0; i < qtd; i++) {
       const ang = subir ? aleatorio(-Math.PI * 0.9, -Math.PI * 0.1) : aleatorio(0, Math.PI * 2);
       const v = aleatorio(forca * 0.3, forca);
@@ -156,7 +152,7 @@ export function voar(html, de, para, { arco = 0, duracao = 650, girar = 0, opaci
     quadros.push({ transform: `translate(${x}px, ${y}px) scale(${s}) rotate(${girar * t}deg)`, opacity: o });
   }
   const anim = el.animate(quadros, {
-    duration: movimentoReduzido() ? Math.min(duracao, 200) : duracao,
+    duration: duracao,
     easing,
     fill: 'forwards',
   });

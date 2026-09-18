@@ -124,6 +124,20 @@ const PERFIS = {
     esvaziar: () => { ruido({ dur: 0.8, vol: 0.1, freq: 300, q: 0.7 }); tom({ f: 700, f2: 200, dur: 0.6, vol: 0.06 }); },
     confirmar: () => arpejo([784, 988, 1175, 1568, 1976], { tipo: 'sine', dur: 0.5, vol: 0.06, passo: 0.09 }),
   },
+  guilda: {
+    nav: () => tom({ f: 2100, dur: 0.06, tipo: 'triangle', vol: 0.04 }),
+    pegar: () => ruido({ dur: 0.08, vol: 0.14, freq: 320, q: 2 }),
+    voltar: () => ruido({ dur: 0.08, vol: 0.12, freq: 260, q: 2 }),
+    adicionar: () => {
+      ruido({ dur: 0.1, vol: 0.14, freq: 280, q: 2 });
+      arpejo([880, 1175, 1760], { tipo: 'square', dur: 0.1, vol: 0.035, passo: 0.07, atraso: 0.08 });
+    },
+    esvaziar: () => [0, 0.06, 0.11, 0.18, 0.24, 0.33].forEach((a, i) => tom({ f: 2000 + (i % 3) * 400, dur: 0.1, tipo: 'triangle', vol: 0.045, atraso: a })),
+    confirmar: () => {
+      arpejo([523, 659, 784, 1047], { tipo: 'square', dur: 0.16, vol: 0.04, passo: 0.1 });
+      tom({ f: 1568, dur: 0.6, tipo: 'triangle', vol: 0.06, atraso: 0.42 });
+    },
+  },
 };
 
 export function tocar(evento) {
