@@ -1,0 +1,357 @@
+/* Tema medieval: paredes de tábuas de carvalho, tochas, estandartes, prateleiras rústicas e placas de madeira. */
+
+[data-tema='medieval'] {
+  --fundo: #2b1a0e;
+  --texto: #f3e6c9;
+  --texto-suave: #cdb087;
+  --titulo-cor: #e8b04a;
+  --titulo-sombra: 0 3px 0 #3b1d08, 0 0 22px rgba(255, 150, 50, 0.35);
+  --destaque: #8e1b1b;
+  --destaque-texto: #fbeed2;
+  --destaque-borda: #d9a441;
+  --painel: #f2e6ca;
+  --painel-texto: #2e1d10;
+  --painel-suave: #735236;
+  --painel-borda: #9c7446;
+  --painel-preco: #8e1b1b;
+  --painel-sombra: 0 30px 70px rgba(0, 0, 0, 0.65);
+  --palco: radial-gradient(circle, rgba(255, 170, 70, 0.35), rgba(255, 170, 70, 0) 70%);
+  --campo-bg: rgba(255, 255, 255, 0.5);
+  --fonte-titulo: 'UnifrakturMaguntia', 'Old English Text MT', serif;
+  --fonte-texto: 'Alegreya', Georgia, serif;
+  --fonte-rotulo: 'Alegreya SC', Georgia, serif;
+  --contorno: #2a1810;
+  --raio-btn: 5px;
+  --raio-pilula: 6px;
+  --raio-aba: 0;
+  --controle-bg: rgba(40, 22, 10, 0.75);
+  --controle-borda: rgba(217, 164, 65, 0.45);
+  --aba-bg: #5a3419;
+  --aba-borda: #3a1f0c;
+  --aba-texto: #f0dcb4;
+  --aba-ativa-bg: #8e1b1b;
+  --aba-ativa-texto: #f8e2a8;
+  --aba-ativa-borda: #d9a441;
+  --placa-bg: linear-gradient(#c99a5e, #a97a44);
+  --placa-texto: #2a1608;
+  --placa-preco: #6e1010;
+  --fonte-placa: 'Alegreya SC', Georgia, serif;
+  --contador-bg: #8e1b1b;
+  --contador-texto: #fbeed2;
+  --contador-sombra: 0 0 0 2px #d9a441, 0 3px 8px rgba(0, 0, 0, 0.5);
+  --aviso-bg: #f2e6ca;
+  --aviso-texto: #2e1d10;
+  --veu: rgba(16, 8, 2, 0.7);
+  --foco: #f2c14e;
+  --perigo: #8e1b1b;
+  --clarao: radial-gradient(circle at 50% 85%, rgba(255, 200, 90, 0.55), rgba(255, 200, 90, 0) 70%);
+
+  background:
+    radial-gradient(ellipse 45% 60% at 0% 45%, rgba(255, 140, 40, 0.22), transparent 70%),
+    radial-gradient(ellipse 45% 60% at 100% 45%, rgba(255, 140, 40, 0.22), transparent 70%),
+    radial-gradient(ellipse at center, transparent 40%, rgba(10, 4, 0, 0.7) 100%),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.06) 2px 3px, rgba(0, 0, 0, 0) 3px 23px),
+    repeating-linear-gradient(90deg, #3b2413 0 116px, #1c0f06 116px 120px, #34200f 120px 238px, #1c0f06 238px 242px),
+    #3b2413;
+}
+
+/* Tochas e estandartes */
+[data-tema='medieval'] .tocha {
+  position: absolute;
+  top: 34%;
+  width: 16px;
+  height: 80px;
+}
+
+[data-tema='medieval'] .tocha::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #4a2c14, #7a4a22 50%, #3a200c);
+  clip-path: polygon(0 0, 100% 0, 75% 100%, 25% 100%);
+}
+
+[data-tema='medieval'] .tocha.esq {
+  left: 2.2%;
+}
+
+[data-tema='medieval'] .tocha.dir {
+  right: 2.2%;
+}
+
+[data-tema='medieval'] .tocha::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: -3px;
+  right: -3px;
+  height: 7px;
+  z-index: 1;
+  background: #5b5f66;
+}
+
+[data-tema='medieval'] .tocha.esq .chama,
+[data-tema='medieval'] .tocha.dir .chama {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 30px;
+  height: 48px;
+  margin-left: -15px;
+  border-radius: 50% 50% 40% 40% / 70% 70% 30% 30%;
+  background: radial-gradient(ellipse at 50% 78%, #fff6c8 0 14%, #ffb13b 38%, #ff5a14 60%, rgba(255, 60, 0, 0) 72%);
+  box-shadow: 0 0 60px 26px rgba(255, 130, 30, 0.28);
+  transform-origin: 50% 100%;
+  animation: tocha 0.22s ease-in-out infinite alternate;
+}
+
+[data-tema='medieval'] .tocha.dir .chama {
+  animation-delay: -0.11s;
+}
+
+@keyframes tocha {
+  from { transform: scale(1, 1) skewX(-3deg); }
+  to { transform: scale(0.9, 1.12) skewX(4deg); }
+}
+
+[data-tema='medieval'] .estandarte {
+  position: absolute;
+  top: 150px;
+  width: 84px;
+  height: 190px;
+  padding-top: 70px;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.25), transparent 30%, transparent 70%, rgba(0, 0, 0, 0.3)),
+    #8e1b1b;
+  border-top: 10px solid #5a3419;
+  box-shadow: 0 -4px 0 #2e1a0a;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%);
+  transform-origin: 50% 0;
+  animation: estandarte 7s ease-in-out infinite;
+}
+
+[data-tema='medieval'] .estandarte svg {
+  width: 52px;
+}
+
+[data-tema='medieval'] .estandarte.esq {
+  left: 5.5%;
+}
+
+[data-tema='medieval'] .estandarte.dir {
+  right: 5.5%;
+  animation-delay: -3.5s;
+}
+
+@keyframes estandarte {
+  0%, 100% { transform: rotate(-1.2deg) skewX(0deg); }
+  50% { transform: rotate(1.2deg) skewX(1.5deg); }
+}
+
+@media (max-width: 1640px) {
+  [data-tema='medieval'] .estandarte {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  [data-tema='medieval'] .tocha {
+    display: none;
+  }
+}
+
+/* Abas em forma de flâmula */
+[data-tema='medieval'] .aba {
+  padding: 8px 22px 14px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  border-width: 0;
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.12);
+}
+
+[data-tema='medieval'] .aba[aria-selected='true'] {
+  box-shadow: inset 0 3px 0 #d9a441;
+}
+
+/* Prateleiras: carvalho grosso com pregos de ferro */
+[data-tema='medieval'] .prateleira {
+  --tabua: 22px;
+}
+
+[data-tema='medieval'] .prateleira-tabua {
+  background:
+    radial-gradient(circle at 3% 55%, #2a2a2a 0 3px, transparent 4px),
+    radial-gradient(circle at 97% 55%, #2a2a2a 0 3px, transparent 4px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0) 0 40px, rgba(0, 0, 0, 0.08) 40px 42px),
+    linear-gradient(#a66d38, #7d4d24 40%, #5a3417);
+  border-top: 2px solid #c48a4d;
+  border-bottom: 3px solid #2e1a0a;
+  box-shadow: 0 16px 20px -8px rgba(0, 0, 0, 0.75);
+}
+
+[data-tema='medieval'] .item-icone .ic {
+  filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.5));
+}
+
+[data-tema='medieval'] .item:hover .item-icone {
+  filter: drop-shadow(0 0 16px rgba(255, 170, 60, 0.5));
+}
+
+/* Plaquinha de madeira pendurada por cordas */
+[data-tema='medieval'] .item-placa {
+  position: relative;
+  border: 2px solid #4a2a12;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 8px rgba(0, 0, 0, 0.5);
+  transform-origin: 50% -12px;
+}
+
+[data-tema='medieval'] .item:hover .item-placa {
+  animation: placa-balanca 0.9s ease-in-out;
+}
+
+[data-tema='medieval'] .item-placa::before,
+[data-tema='medieval'] .item-placa::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  width: 2px;
+  height: 12px;
+  background: #c9a86b;
+}
+
+[data-tema='medieval'] .item-placa::before {
+  left: 18%;
+}
+
+[data-tema='medieval'] .item-placa::after {
+  right: 18%;
+}
+
+@keyframes placa-balanca {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(4deg); }
+  55% { transform: rotate(-3deg); }
+  80% { transform: rotate(1.5deg); }
+  100% { transform: rotate(0); }
+}
+
+/* Receptáculo: baú */
+[data-tema='medieval'] .receptaculo .tampa {
+  transform-origin: 34px 80px;
+  transition: transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+[data-tema='medieval'] .receptaculo .luz-bau path {
+  fill: rgba(255, 214, 120, 0.3);
+}
+
+[data-tema='medieval'] .receptaculo .luz-bau {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+[data-tema='medieval'] .receptaculo .brilho-chao {
+  fill: #ffb347;
+  opacity: 0.25;
+}
+
+[data-tema='medieval'] .receptaculo:hover .tampa,
+[data-tema='medieval'] .receptaculo.aberto .tampa {
+  transform: rotate(-10deg);
+}
+
+[data-tema='medieval'] .receptaculo.aberto .luz-bau {
+  opacity: 0.7;
+}
+
+[data-tema='medieval'] .receptaculo.recebendo .tampa {
+  animation: tampa-recebe 0.8s ease-in-out;
+}
+
+[data-tema='medieval'] .receptaculo.recebendo .luz-bau {
+  animation: clarao 0.8s ease-out;
+}
+
+[data-tema='medieval'] .receptaculo.enviando .tampa {
+  animation: tampa-recebe 1s ease-in-out 2;
+}
+
+[data-tema='medieval'] .receptaculo.enviando .luz-bau {
+  animation: clarao 1s ease-out 2;
+}
+
+@keyframes tampa-recebe {
+  0% { transform: rotate(0); }
+  30%, 60% { transform: rotate(-26deg); }
+  85% { transform: rotate(2deg); }
+  100% { transform: rotate(0); }
+}
+
+/* Ficha: pergaminho num quadro de madeira com cantoneiras de ferro */
+[data-tema='medieval'] .ficha,
+[data-tema='medieval'] .painel {
+  border: 10px solid #6e4523;
+  border-radius: 6px;
+  outline: 2px solid #2e1a0a;
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(255, 255, 255, 0.4), transparent 50%),
+    radial-gradient(ellipse at 85% 95%, rgba(140, 90, 30, 0.2), transparent 55%),
+    #f2e6ca;
+}
+
+[data-tema='medieval'] .gaveta {
+  border-left: 10px solid #6e4523;
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(255, 255, 255, 0.4), transparent 50%),
+    #f2e6ca;
+}
+
+[data-tema='medieval'] .ficha::before,
+[data-tema='medieval'] .ficha::after {
+  content: '';
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border: 5px solid #4b4f56;
+  pointer-events: none;
+}
+
+[data-tema='medieval'] .ficha::before {
+  top: -10px;
+  left: -10px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+[data-tema='medieval'] .ficha::after {
+  bottom: -10px;
+  right: -10px;
+  border-left: 0;
+  border-top: 0;
+}
+
+[data-tema='medieval'] .camada-ficha.entrando .ficha {
+  transform-origin: 50% -40px;
+  animation: placa-cai 0.8s cubic-bezier(0.3, 1.2, 0.5, 1) both;
+}
+
+@keyframes placa-cai {
+  0% { opacity: 0; transform: translateY(-60vh) rotate(-4deg); }
+  45% { opacity: 1; transform: translateY(0) rotate(3deg); }
+  70% { transform: rotate(-1.5deg); }
+  100% { transform: none; }
+}
+
+[data-tema='medieval'] .painel-pedido.sucesso .selo {
+  animation: selo-carimbo 0.7s cubic-bezier(0.5, 0, 0.5, 1.6) both;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.4));
+}
+
+@keyframes selo-carimbo {
+  0% { opacity: 0; transform: scale(3) rotate(-12deg); }
+  70% { opacity: 1; transform: scale(0.94) rotate(0); }
+  100% { transform: scale(1); }
+}

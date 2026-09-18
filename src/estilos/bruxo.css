@@ -1,0 +1,325 @@
+/* Tema bruxo: parede de pedra índigo, velas flutuantes, prateleiras de madeira escura e fichas de pergaminho. */
+
+[data-tema='bruxo'] {
+  --fundo: #17132a;
+  --texto: #f1e6c8;
+  --texto-suave: #b8a98c;
+  --titulo-cor: #f4d68a;
+  --titulo-sombra: 0 0 18px rgba(244, 195, 90, 0.35), 0 2px 0 #3a2410;
+  --destaque: #caa04a;
+  --destaque-texto: #221506;
+  --destaque-borda: #f4d68a;
+  --painel: #efe0bd;
+  --painel-texto: #3b2616;
+  --painel-suave: #7a5c3a;
+  --painel-borda: #b3915f;
+  --painel-preco: #7a2e1f;
+  --painel-sombra: 0 30px 80px rgba(0, 0, 0, 0.6);
+  --palco: radial-gradient(circle, rgba(124, 255, 107, 0.28), rgba(124, 255, 107, 0) 70%);
+  --campo-bg: rgba(255, 255, 255, 0.45);
+  --fonte-titulo: 'IM Fell English SC', 'Palatino Linotype', serif;
+  --fonte-texto: 'IM Fell English', 'Palatino Linotype', Georgia, serif;
+  --fonte-rotulo: 'IM Fell English SC', 'Palatino Linotype', serif;
+  --contorno: #2a1810;
+  --raio-btn: 4px;
+  --raio-pilula: 999px;
+  --raio-aba: 3px;
+  --controle-bg: rgba(18, 14, 34, 0.7);
+  --controle-borda: rgba(244, 214, 138, 0.35);
+  --aba-bg: rgba(18, 14, 34, 0.6);
+  --aba-borda: rgba(244, 214, 138, 0.3);
+  --aba-texto: #d9c9a3;
+  --aba-ativa-bg: #caa04a;
+  --aba-ativa-texto: #221506;
+  --placa-bg: #e9d8ae;
+  --placa-texto: #3b2616;
+  --placa-preco: #7a2e1f;
+  --contador-bg: #7cff6b;
+  --contador-texto: #0d2a0f;
+  --contador-sombra: 0 0 14px rgba(124, 255, 107, 0.7);
+  --aviso-bg: #efe0bd;
+  --aviso-texto: #3b2616;
+  --veu: rgba(10, 7, 20, 0.72);
+  --foco: #7cff6b;
+  --perigo: #8e2a2a;
+  --clarao: radial-gradient(circle at 50% 85%, rgba(124, 255, 107, 0.55), rgba(124, 255, 107, 0) 70%);
+
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(120, 92, 210, 0.28), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 50% 100%, rgba(124, 255, 107, 0.16), transparent 70%),
+    radial-gradient(ellipse at center, transparent 45%, rgba(4, 2, 10, 0.75) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='72'%3E%3Cg fill='none' stroke='%23000' stroke-opacity='.38' stroke-width='3'%3E%3Cpath d='M0 1.5H140M0 37.5H140M35 1.5V37.5M105 1.5V37.5M0 37.5V73M70 37.5V73M140 37.5V73'/%3E%3C/g%3E%3Cg fill='%23fff' fill-opacity='.025'%3E%3Crect x='3' y='4' width='29' height='31'/%3E%3Crect x='73' y='40' width='64' height='31'/%3E%3C/g%3E%3C/svg%3E"),
+    #1c1733;
+}
+
+/* Velas flutuando nas laterais */
+[data-tema='bruxo'] .vela {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 12px;
+  height: calc(52px * var(--alt));
+  border-radius: 3px 3px 2px 2px;
+  background: linear-gradient(90deg, #d8cba6, #fbf4df 40%, #cfc09a);
+  box-shadow: 0 0 30px 6px rgba(255, 196, 90, 0.18);
+  animation: vela-flutua 6s ease-in-out infinite;
+  animation-delay: var(--atraso);
+}
+
+[data-tema='bruxo'] .vela::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: #fbf4df;
+}
+
+[data-tema='bruxo'] .chama {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 12px;
+  height: 22px;
+  margin-left: -6px;
+  border-radius: 50% 50% 45% 45% / 65% 65% 35% 35%;
+  background: radial-gradient(ellipse at 50% 72%, #fffbe0 0 18%, #ffc43d 42%, rgba(255, 120, 20, 0.2) 70%, transparent 72%);
+  box-shadow: 0 0 26px 10px rgba(255, 190, 80, 0.3);
+  transform-origin: 50% 100%;
+  animation: tremular 0.18s ease-in-out infinite alternate;
+}
+
+[data-tema='bruxo'] .nevoa {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -8vh;
+  height: 36vh;
+  background:
+    radial-gradient(ellipse 30% 45% at 20% 60%, rgba(160, 150, 220, 0.16), transparent 70%),
+    radial-gradient(ellipse 35% 50% at 70% 70%, rgba(124, 255, 107, 0.1), transparent 70%),
+    radial-gradient(ellipse 40% 40% at 45% 80%, rgba(200, 190, 255, 0.12), transparent 70%);
+  animation: nevoa 14s ease-in-out infinite alternate;
+}
+
+@keyframes vela-flutua {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-14px) rotate(1.5deg); }
+}
+
+@keyframes tremular {
+  from { transform: scale(1, 1) rotate(-2deg); opacity: 0.92; }
+  to { transform: scale(0.92, 1.1) rotate(2deg); opacity: 1; }
+}
+
+@keyframes nevoa {
+  from { transform: translateX(-3%); }
+  to { transform: translateX(3%); }
+}
+
+/* Topo e abas */
+[data-tema='bruxo'] .titulo {
+  letter-spacing: 0.02em;
+}
+
+[data-tema='bruxo'] .aba {
+  font-size: 1.05rem;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+/* Prateleiras: madeira escura com mãos-francesas de latão */
+[data-tema='bruxo'] .prateleira-tabua {
+  border-radius: 2px;
+  background: linear-gradient(#7a5132 0, #5b3a21 35%, #3e2513 100%);
+  box-shadow:
+    0 14px 22px -6px rgba(0, 0, 0, 0.7),
+    inset 0 2px 0 rgba(255, 222, 170, 0.28),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.35);
+}
+
+[data-tema='bruxo'] .prateleira-tabua::before,
+[data-tema='bruxo'] .prateleira-tabua::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(135deg, #b98b3e, #6b4a1c);
+  clip-path: polygon(0 0, 100% 0, 100% 18%, 18% 100%, 0 100%);
+}
+
+[data-tema='bruxo'] .prateleira-tabua::before {
+  left: 8%;
+}
+
+[data-tema='bruxo'] .prateleira-tabua::after {
+  right: 8%;
+  transform: scaleX(-1);
+}
+
+[data-tema='bruxo'] .item-icone .ic {
+  animation: flutua-item 4.2s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.6s);
+  filter: drop-shadow(0 6px 5px rgba(0, 0, 0, 0.45));
+}
+
+[data-tema='bruxo'] .item:hover .item-icone {
+  filter: drop-shadow(0 0 14px rgba(244, 214, 138, 0.55));
+}
+
+@keyframes flutua-item {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Etiqueta de pergaminho pendurada */
+[data-tema='bruxo'] .item-placa {
+  position: relative;
+  border-radius: 2px;
+  padding: 6px 12px 7px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(#f1e3bd, #dcc792);
+  rotate: -2deg;
+  transform-origin: 50% -10px;
+  transition: rotate 0.4s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+
+[data-tema='bruxo'] .item:nth-child(even) .item-placa {
+  rotate: 2deg;
+}
+
+[data-tema='bruxo'] .item:hover .item-placa {
+  rotate: 0deg;
+}
+
+[data-tema='bruxo'] .item-placa::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 1px;
+  height: 10px;
+  background: #a8875a;
+}
+
+/* Receptáculo: caldeirão */
+[data-tema='bruxo'] .receptaculo {
+  --caldo: #62e07a;
+}
+
+[data-tema='bruxo'] .receptaculo .corpo {
+  fill: #26222f;
+  stroke: #0c0a10;
+  stroke-width: 3;
+}
+
+[data-tema='bruxo'] .receptaculo .borda {
+  fill: #3b3746;
+  stroke: #0c0a10;
+  stroke-width: 3;
+}
+
+[data-tema='bruxo'] .receptaculo .caldo {
+  fill: var(--caldo);
+  transition: fill 0.8s;
+  filter: drop-shadow(0 0 8px var(--caldo));
+}
+
+[data-tema='bruxo'] .receptaculo .borbulha {
+  fill: color-mix(in srgb, var(--caldo) 60%, white);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: borbulhar 2.4s ease-in infinite;
+  animation-delay: var(--atraso);
+}
+
+[data-tema='bruxo'] .receptaculo .fumaca circle {
+  fill: color-mix(in srgb, var(--caldo) 35%, rgba(230, 255, 230, 0.4));
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: fumaca 2.8s ease-out infinite;
+  animation-delay: var(--atraso);
+}
+
+[data-tema='bruxo'] .receptaculo .brilho-chao {
+  fill: #ff9a3c;
+  opacity: 0.35;
+}
+
+[data-tema='bruxo'] .receptaculo.recebendo .borbulha {
+  animation-duration: 0.6s;
+}
+
+[data-tema='bruxo'] .receptaculo.enviando .fumaca circle {
+  animation: fumaca-grande 1.3s ease-out;
+}
+
+@keyframes borbulhar {
+  0% { transform: scale(0); opacity: 0; }
+  30% { opacity: 1; }
+  80% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+@keyframes fumaca {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  35% { opacity: 0.55; }
+  100% { transform: translateY(-46px) scale(1.5); opacity: 0; }
+}
+
+@keyframes fumaca-grande {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  20% { opacity: 0.9; }
+  100% { transform: translateY(-120px) scale(4); opacity: 0; }
+}
+
+/* Ficha: pergaminho que desenrola, com varetas nas pontas */
+[data-tema='bruxo'] .ficha,
+[data-tema='bruxo'] .painel,
+[data-tema='bruxo'] .gaveta {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(255, 255, 255, 0.35), transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(150, 100, 40, 0.18), transparent 55%),
+    linear-gradient(#f3e5c3, #e6d3a6);
+}
+
+[data-tema='bruxo'] .ficha {
+  border-radius: 4px;
+  margin-block: 22px;
+}
+
+[data-tema='bruxo'] .ficha::before,
+[data-tema='bruxo'] .ficha::after {
+  content: '';
+  position: absolute;
+  left: -14px;
+  right: -14px;
+  height: 20px;
+  border-radius: 10px;
+  background: linear-gradient(#8a6038, #5a3a1e 50%, #3e2512);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+[data-tema='bruxo'] .ficha::before {
+  top: -14px;
+}
+
+[data-tema='bruxo'] .ficha::after {
+  bottom: -14px;
+}
+
+[data-tema='bruxo'] .camada-ficha.entrando .ficha {
+  animation: desenrolar 0.6s cubic-bezier(0.3, 0.9, 0.3, 1) both;
+}
+
+@keyframes desenrolar {
+  from { clip-path: inset(-30px -20px 100% -20px); }
+  to { clip-path: inset(-30px -20px -30px -20px); }
+}
+
+[data-tema='bruxo'] .painel-pedido.sucesso .selo svg {
+  animation: giro 14s linear infinite;
+}
